@@ -11,7 +11,7 @@ public class Main {
     String[] phrases;
 
     public Main() {
-        c = new Console(30, 120);
+        c = new Console();
     }
 
     // displays the instructions for the game
@@ -40,12 +40,20 @@ public class Main {
         // main instruction loop
         while (true) {
             c.setColor(Color.WHITE);
-            c.fillRect(80,80,600,300);
+            c.fillRect(120,80,430,300);
             c.setColor(Color.BLACK);
             // display the page
-            c.drawString("Instructions - Page " + currentPage, 200, 100);
+            c.drawString("Instructions - Page " + currentPage, 270, 100);
             for (int i = (currentPage - 1) * linesPerPage, lineY = 130; i < (currentPage * linesPerPage); ++i, lineY += 20) {
-                c.drawString(instructions[i], 200, lineY);
+                c.drawString(instructions[i], 150, lineY);
+            }
+            // display controls
+            if (currentPage != 1) {
+                c.drawString("<Q> previous page", 150, 350);
+            }
+            c.drawString("<ENTER> main menu", 270, 350);
+            if (currentPage != 4) {
+                c.drawString("<E> next page", 400, 350);
             }
 
             // get user input
@@ -95,5 +103,6 @@ public class Main {
     public static void main(String[] args) throws IOException {
         Main m = new Main();
         m.displayInstructions();
+        System.exit(0);
     }
 }

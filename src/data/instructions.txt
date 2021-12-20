@@ -37,4 +37,4 @@ amount landed on.
 At the end of the finals, both players will have their score entered into
 a scoreboard. The final winner is whoever has the most money.
 
-This is the end of the instructions.
+This is the end of the instructions. Good luck!
