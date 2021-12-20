@@ -9,6 +9,11 @@ public class Main {
     Console c;
     String[] phrases;
 
+    private static final Font TITLE_FONT = new Font("SansSerif", Font.BOLD, 16);
+    private static final Font SUBTITLE_FONT = new Font("SansSerif", Font.BOLD, 16);
+    private static final Font PARAGRAPH_FONT = new Font("SansSerif", Font.BOLD, 10);
+
+    // constructor for the main class
     public Main() {
         c = new Console();
     }
@@ -31,27 +36,38 @@ public class Main {
         while ((ln = br.readLine()) != null) {
             instructions[ptr++] = ln;
         }
-        // TODO: insert background
 
+        // draw the background
+        Background b = new Background(c);
+        b.drawBackground();
+
+        // current page
         int currentPage = 1;
 
         // main instruction loop
         while (true) {
-            c.setColor(Color.WHITE);
-            c.fillRect(120,80,430,300);
+            // clear previously displayed instructions
             c.setColor(Color.BLACK);
-            // display the page
-            c.drawString("Instructions - Page " + currentPage, 270, 100);
-            for (int i = (currentPage - 1) * linesPerPage, lineY = 130; i < (currentPage * linesPerPage); ++i, lineY += 20) {
-                c.drawString(instructions[i], 150, lineY);
+            c.fillRect(110,160,430,300);
+            c.setColor(Color.WHITE);
+
+            // display the instruction page
+            c.setFont(SUBTITLE_FONT);
+            c.drawString("Instructions - Page " + currentPage, 230, 180);
+
+            // display instruction content
+            c.setFont(PARAGRAPH_FONT);
+            for (int i = (currentPage - 1) * linesPerPage, lineY = 220; i < (currentPage * linesPerPage); ++i, lineY += 20) {
+                c.drawString(instructions[i], 130, lineY);
             }
+
             // display controls
             if (currentPage != 1) {
-                c.drawString("<Q> previous page", 150, 350);
+                c.drawString("<Q> previous page", 150, 440);
             }
-            c.drawString("<ENTER> main menu", 270, 350);
+            c.drawString("<ENTER> main menu", 270, 440);
             if (currentPage != 4) {
-                c.drawString("<E> next page", 400, 350);
+                c.drawString("<E> next page", 400, 440);
             }
 
             // get user input
