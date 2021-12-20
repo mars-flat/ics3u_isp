@@ -31,7 +31,6 @@ public class Main {
         while ((ln = br.readLine()) != null) {
             instructions[ptr++] = ln;
         }
-
         // TODO: insert background
 
         int currentPage = 1;
