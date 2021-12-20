@@ -77,7 +77,7 @@ public class Wheel implements Runnable {
         int curAngle = 0;
         while (running) {
             animate(curAngle);
-            curAngle += 20;
+            curAngle += 5;
             try{
                 Thread.sleep(50);
             } catch(InterruptedException e){
@@ -93,7 +93,7 @@ public class Wheel implements Runnable {
         Thread t = new Thread(w);
         t.start();
         try{
-            Thread.sleep(2000);
+            Thread.sleep(5000);
             w.stop();
             t.join();
         } catch (InterruptedException e){
