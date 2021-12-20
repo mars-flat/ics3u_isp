@@ -77,7 +77,12 @@ public class Wheel implements Runnable {
         int curAngle = 0;
         while (running) {
             animate(curAngle);
-            curAngle += 2;
+            curAngle += 20;
+            try{
+                Thread.sleep(50);
+            } catch(InterruptedException e){
+                c.print(e.getMessage());
+            }
         }
     }
 
@@ -85,15 +90,14 @@ public class Wheel implements Runnable {
     public static void main(String[] args){
         Console c = new Console();
         Wheel w = new Wheel(200, 200, 200, new String[] {"$500", "$600", "$700", "$500", "$1200", "$1600", "$300", "broke", "$800"}, c);
-        int i = 0;
-        while(w.running){
-            w.animate(i);
-            i += 5;
-            try{
-                Thread.sleep(50);
-            } catch(InterruptedException e){
-                c.print(e.getMessage());
-            }
+        Thread t = new Thread(w);
+        t.start();
+        try{
+            Thread.sleep(2000);
+            w.stop();
+            t.join();
+        } catch (InterruptedException e){
+            c.print(e.getMessage());
         }
     }
 
