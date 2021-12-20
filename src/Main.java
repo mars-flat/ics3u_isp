@@ -7,7 +7,6 @@ import java.io.IOException;
 
 public class Main {
     Console c;
-    String[] phrases;
 
     public Main() {
         c = new Console();
