@@ -8,7 +8,6 @@ phrase will be chosen, which is a noun, person, phrase, or place.
 
 The current player will spin the wheel. If it lands on “BANKRUPT”, the
 player loses all their money and loses their turn.
-
 If it lands on “LOSE A TURN”, the player loses their turn but
 does not lose their money.
 
@@ -18,10 +17,8 @@ uncovered letter will give the player [AMT] * [LETTERS UNCOVERED] dollars.
 
 The current player can then guess the phrase. If they guess correctly,
 the round ends and the player will gain $20,000.
-
 If the contestant does not guess correctly, the turn goes over to
 the other player, who will repeat the process.
-
 After three rounds, the player with the most money will advance to the
 final round.
 
@@ -38,3 +35,6 @@ At the end of the finals, both players will have their score entered into
 a scoreboard. The final winner is whoever has the most money.
 
 This is the end of the instructions. Good luck!
+
+
+
