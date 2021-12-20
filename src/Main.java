@@ -8,7 +8,7 @@ import java.io.IOException;
 public class Main {
     Console c;
 
-    private static final Font TITLE_FONT = new Font("SansSerif", Font.BOLD, 16);
+    //private static final Font TITLE_FONT = new Font("SansSerif", Font.BOLD, 16);
     private static final Font SUBTITLE_FONT = new Font("SansSerif", Font.BOLD, 16);
     private static final Font PARAGRAPH_FONT = new Font("SansSerif", Font.BOLD, 10);
 
