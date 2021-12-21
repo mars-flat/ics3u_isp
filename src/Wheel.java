@@ -46,13 +46,14 @@ public class Wheel implements Runnable {
         c.setFont(contentFont);
         for (int i = 0; i < message.length(); i++) {
             int dist = radius - radius / 7 - radius * i / 9;
-            int x = (int) (Math.cos(radians(angle)) * dist + radius / 25);
+            int x = (int) (Math.cos(radians(angle)) * dist - radius / 35);
             int y = (int) (Math.sin(radians(angle)) * dist + radius / 20);
             c.drawString(message.substring(i, i + 1), x + centerX, y + centerY);
         }
     }
 
     String curMessage(int angle) {
+        angle += 270;
         return messages[angle % 360 * messages.length / 360];
     }
 
@@ -60,13 +61,17 @@ public class Wheel implements Runnable {
         double increment = 360.0 / messages.length;
         for (int i = 0; i < messages.length; i++) {
             c.setColor(colors[i]);
-            c.fillArc(centerX - radius, centerY - radius, 2 * radius, 2 * radius, (int) (increment * i) + angle, (int) increment);
+            c.fillArc(centerX - radius, centerY - radius, 2 * radius, 2 * radius, (int) (increment * i) + angle - 1, (int) increment + 2);
         }
         c.setColor(Color.BLACK);
         c.drawOval(centerX - radius, centerY - radius, 2 * radius, 2 * radius);
         for(int i = 0; i < messages.length; i++){
             drawString(messages[i], (int) (increment * i + increment / 2 - angle));
         }
+        int[] x = {centerX - radius / 20, centerX + radius / 20, centerX};
+        int[] y = {centerY - radius - radius / 20, centerY - radius - radius / 20, centerY - radius + radius / 20};
+        c.setColor(new Color(0, 150, 200));
+        c.fillPolygon(x, y, 3);
     }
 
     public void stop() {
