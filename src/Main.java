@@ -12,21 +12,24 @@ public class Main {
     private static final Font SUBTITLE_FONT = new Font("Kristen ITC", Font.BOLD, 18);
     private static final Font PARAGRAPH_FONT = new Font("SansSerif", Font.BOLD, 10);
 
+    // stores lines of the instructions pages
+    String[] instructions;
+
     // constructor for the main class
     public Main() {
         c = new Console();
+        // load data on object initialization (this pattern can be changed)
+        try {
+            loadInstructions();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    // displays the instructions for the game
-    // requires multiple pages
-    public void displayInstructions() throws IOException {
-        // lines per page constant
-        int linesPerPage = 10;
-        // preprocessing
-        // BufferedReader instance
+    private void loadInstructions() throws IOException {
         BufferedReader br = new BufferedReader(new FileReader("data/instructions.txt"));
         // number of lines in the instructions page
-        String[] instructions = new String[50];
+        instructions = new String[50];
         // pointer to the index
         int ptr = 0;
         // variable to store read line
@@ -35,6 +38,13 @@ public class Main {
         while ((ln = br.readLine()) != null) {
             instructions[ptr++] = ln;
         }
+    }
+
+    // displays the instructions for the game
+    // requires multiple pages
+    public void displayInstructions() {
+        // lines per page constant
+        int linesPerPage = 10;
 
         // current page
         int currentPage = 1;
@@ -90,6 +100,7 @@ public class Main {
         Background b = new Background(c);
         b.drawBackground();
 
+        // draw the title
         c.setColor(Color.YELLOW);
         c.setFont(TITLE_FONT);
         c.drawString("WHEEL OF FORTUNE", 190, 130);
