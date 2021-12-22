@@ -8,8 +8,8 @@ import java.io.IOException;
 public class Main {
     Console c;
 
-    //private static final Font TITLE_FONT = new Font("SansSerif", Font.BOLD, 16);
-    private static final Font SUBTITLE_FONT = new Font("SansSerif", Font.BOLD, 16);
+    private static final Font TITLE_FONT = new Font("IMPACT", Font.BOLD, 30);
+    private static final Font SUBTITLE_FONT = new Font("Kristen ITC", Font.BOLD, 18);
     private static final Font PARAGRAPH_FONT = new Font("SansSerif", Font.BOLD, 10);
 
     // constructor for the main class
@@ -36,10 +36,6 @@ public class Main {
             instructions[ptr++] = ln;
         }
 
-        // draw the background
-        Background b = new Background(c);
-        b.drawBackground();
-
         // current page
         int currentPage = 1;
 
@@ -52,7 +48,7 @@ public class Main {
 
             // display the instruction page
             c.setFont(SUBTITLE_FONT);
-            c.drawString("Instructions - Page " + currentPage, 230, 180);
+            c.drawString("Instructions - Page " + currentPage, 220, 180);
 
             // display instruction content
             c.setFont(PARAGRAPH_FONT);
@@ -72,14 +68,14 @@ public class Main {
             // get user input
             while (true) {
                 char input = c.getChar();
-                if (input == 10) {
+                if (input == 10) { // leave instructions
                     return;
-                } else if (input == 'q' || input == 'Q') {
+                } else if (input == 'q' || input == 'Q') { // next page if applicable
                     if (currentPage > 1) {
                         currentPage--;
                     }
                     break;
-                } else if (input == 'e' || input == 'E') {
+                } else if (input == 'e' || input == 'E') { // previous page if applicable
                     if (currentPage < 4) {
                         currentPage++;
                     }
@@ -90,7 +86,13 @@ public class Main {
     }
 
     public void displayTitle() {
+        // draw the background
+        Background b = new Background(c);
+        b.drawBackground();
 
+        c.setColor(Color.YELLOW);
+        c.setFont(TITLE_FONT);
+        c.drawString("WHEEL OF FORTUNE", 190, 130);
     }
 
     public void displaySplashScreen() {
@@ -115,6 +117,7 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         Main m = new Main();
+        m.displayTitle();
         m.displayInstructions();
         System.exit(0);
     }
