@@ -14,6 +14,7 @@ public class Main {
 
     // stores lines of the instructions pages
     String[] instructions;
+    LeaderboardEntry[] entries;
 
     // constructor for the main class
     public Main() {
@@ -114,8 +115,39 @@ public class Main {
 
     }
 
-    private void loadScores() {
+    // loads scores into array
+    private void loadScores() throws IOException {
 
+    }
+
+    private void sortScores() throws IOException {
+        while (true) {
+            // simple bubble sort algorithm
+            // assume sorted
+            boolean sorted = true;
+            // check if sorted
+            for (int i = 1; i < entries.length; ++i) {
+                // if current entry is less than previous, it's not sorted
+                if (entries[i].score < entries[i-1].score) {
+                    sorted = false;
+
+                    // swap the two entries
+                    LeaderboardEntry temp = entries[i];
+                    entries[i] = entries[i-1];
+                    entries[i-1] = temp;
+
+                    // if entries are equal and the current string is lexicographically less than the previous, it's not sorted
+                } else if (entries[i].score == entries[i-1].score && entries[i].entryName.compareTo(entries[i-1].entryName) > 0) {
+                    sorted = false;
+
+                    // swap the two entries
+                    LeaderboardEntry temp = entries[i];
+                    entries[i] = entries[i-1];
+                    entries[i-1] = temp;
+                }
+            }
+            if (sorted) return;
+        }
     }
 
     private void displayHighScore() {
