@@ -18,7 +18,7 @@ public class Main {
 
     // constructor for the main class
     public Main() {
-        c = new Console();
+        c = new Console(40, 160);
         // load data on object initialization (this pattern can be changed)
         try {
             loadInstructions();
