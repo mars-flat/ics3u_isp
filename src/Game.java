@@ -13,6 +13,7 @@ public class Game {
     String[] names;
     String[][] phrases;
     String[] wheelParts;
+    Wheel curWheel;
 
     int curRound, curPlayer;
     boolean finalRound;
@@ -146,8 +147,7 @@ public class Game {
     private String spinWheel() {
         background.drawBackground();
         drawStats();
-        Wheel toSpin = new Wheel(640, 450, 320, wheelParts, c);
-        toSpin.animate(0);
+        curWheel.animate(0);
         c.setColor(new Color(0, 0, 150));
         c.fillOval(640 - 50, 450 - 50, 100, 100);
         c.setColor(Color.WHITE);
@@ -166,23 +166,23 @@ public class Game {
         int[] numTicks = {(int) (Math.random() * 75) + 100, (int) (Math.random() * 40) + 30, (int) (Math.random() * 50) + 50};
         int curAngle = 0;
         for (int i = 0; i < numTicks[0]; i++) {
-            toSpin.animate(curAngle);
+            curWheel.animate(curAngle);
             pause(50);
             curAngle += 15;
         }
         for (int i = 0; i < numTicks[1]; i++) {
-            toSpin.animate(curAngle);
+            curWheel.animate(curAngle);
             pause(50);
             curAngle += 7;
         }
         for (int i = 0; i < numTicks[2]; i++) {
-            toSpin.animate(curAngle);
+            curWheel.animate(curAngle);
             pause(50);
             curAngle += 3;
         }
-        toSpin.animate(curAngle);
+        curWheel.animate(curAngle);
         pause(400);
-        String result = toSpin.curMessage(curAngle);
+        String result = curWheel.curMessage(curAngle);
         background.drawBackground();
         drawStats();
         c.setFont(new Font("Serif", Font.BOLD, 200));
@@ -335,8 +335,7 @@ public class Game {
     }
 
     private boolean turn() {
-//        String result = spinWheel();
-        String result = "$300";
+        String result = spinWheel();
         if (result.equals("broke")) {
             money[curPlayer] = 0;
         } else {
@@ -363,7 +362,10 @@ public class Game {
                 background.drawBackground();
                 drawStats();
                 drawBlanks(curPhrase);
+                c.setColor(Color.WHITE);
+                c.setFont(promptFont);
                 c.drawString("Correct! " + names[curPlayer] + " gains $20000!", 250, 700);
+                c.setFont(smallPrompt);
                 c.drawString("Press any key to continue", 400, 790);
                 c.getChar();
                 return true;
@@ -371,7 +373,9 @@ public class Game {
                 c.setColor(Color.BLACK);
                 c.fillRect(200, 670, 950, 120);
                 c.setColor(Color.WHITE);
+                c.setFont(promptFont);
                 c.drawString("Unfortunately, that is incorrect", 400, 700);
+                c.setFont(smallPrompt);
                 c.drawString("Press any key to continue", 400, 790);
                 c.getChar();
             }
@@ -380,6 +384,16 @@ public class Game {
     }
 
     private void round() {
+        curWheel = new Wheel(640, 450, 320, wheelParts, c);
+        background.drawBackground();
+        String toDisplay = "Round " + (curRound + 1);
+        c.setFont(new Font("Serif", Font.BOLD, 200));
+        c.setColor(Color.YELLOW);
+        for(int i = 0; i < toDisplay.length(); i++){
+            c.drawString(toDisplay.substring(0, i + 1), 300, 500);
+            pause(300);
+        }
+        pause(1000);
         curPlayer = curRound % 2;
         ansPhrase = phrases[(int) (Math.random() * phrases.length)];
         curPhrase = new String[ansPhrase.length];
@@ -394,14 +408,6 @@ public class Game {
             guessedPhrase = turn();
             curPlayer = (curPlayer + 1) % 2;
         }
-    }
-
-    private void displayResults() {
-
-    }
-
-    private void writeScores() {
-
     }
 
     public void play() {
