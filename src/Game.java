@@ -6,6 +6,12 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
+/*
+* TODO Figure out what happens when people "uncover letters" and end up uncovering the whole phrase
+* TODO find out which phrases are too long to be displayed (they'll throw an ArrayOutOfBoundsException)
+* TODO final round, winner, update scores
+ */
+
 public class Game {
     int[] money;
     Console c;
