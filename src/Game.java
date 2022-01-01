@@ -7,9 +7,8 @@ import java.io.FileReader;
 import java.io.IOException;
 
 /*
-* TODO Figure out what happens when people "uncover letters" and end up uncovering the whole phrase
 * TODO find out which phrases are too long to be displayed (they'll throw an ArrayOutOfBoundsException)
-* TODO final round, winner, update scores
+* TODO winner, update scores
  */
 
 public class Game {
@@ -19,11 +18,11 @@ public class Game {
     String[] names;
     String[][] phrases;
     String[] wheelParts;
+    String[] finalWheelParts;
     Wheel curWheel;
 
     int curRound, curPlayer;
     boolean finalRound;
-    int wheelAmt;
     String[] ansPhrase;
     String[] curPhrase;
 
@@ -131,10 +130,17 @@ public class Game {
             while (br.readLine() != null) {
                 numLines++;
             }
+
             wheelParts = new String[numLines];
             br = new BufferedReader(new FileReader("src/data/wheel.txt"));
             for (int i = 0; i < numLines; i++) {
                 wheelParts[i] = br.readLine();
+            }
+
+            finalWheelParts = new String[numLines];
+            br = new BufferedReader(new FileReader("src/data/final-wheel.txt"));
+            for(int i = 0; i < numLines; i++){
+                finalWheelParts[i] = br.readLine();
             }
         } catch (IOException e) {
             c.print(e.getMessage());
@@ -331,9 +337,9 @@ public class Game {
             c.drawString(line, 250, 700);
         }
         String[] words = split(line.toUpperCase().substring(promptLen));
-        if (words.length != curPhrase.length) return false;
-        for (int i = 0; i < curPhrase.length; i++) {
-            if (!words[i].equals(curPhrase[i])) {
+        if (words.length != ansPhrase.length) return false;
+        for (int i = 0; i < ansPhrase.length; i++) {
+            if (!words[i].toUpperCase().equals(ansPhrase[i].toUpperCase())) {
                 return false;
             }
         }
@@ -390,17 +396,26 @@ public class Game {
     }
 
     private void round() {
-        curWheel = new Wheel(640, 450, 320, wheelParts, c);
         background.drawBackground();
-        String toDisplay = "Round " + (curRound + 1);
+        drawStats();
+
+        String toDisplay;
+        int displayX;
+        if(!finalRound){
+            toDisplay = "Round " + (curRound + 1);
+            displayX = 300;
+        } else {
+            toDisplay = "Final Round";
+            displayX = 110;
+        }
         c.setFont(new Font("Serif", Font.BOLD, 200));
         c.setColor(Color.YELLOW);
         for(int i = 0; i < toDisplay.length(); i++){
-            c.drawString(toDisplay.substring(0, i + 1), 300, 500);
+            c.drawString(toDisplay.substring(0, i + 1), displayX, 500);
             pause(300);
         }
         pause(1000);
-        curPlayer = curRound % 2;
+
         ansPhrase = phrases[(int) (Math.random() * phrases.length)];
         curPhrase = new String[ansPhrase.length];
         for (int i = 0; i < ansPhrase.length; i++) {
@@ -409,11 +424,66 @@ public class Game {
                 curPhrase[i] += "_";
             }
         }
-        boolean guessedPhrase = false;
-        while (!guessedPhrase) {
-            guessedPhrase = turn();
-            curPlayer = (curPlayer + 1) % 2;
+
+        // TODO remove debugging
+        for(int i = 0; i < ansPhrase.length; i++){
+            System.out.print(ansPhrase[i] + " ");
         }
+        System.out.println();
+
+        if(!finalRound){
+            curWheel = new Wheel(640, 450, 320, wheelParts, c);
+            curPlayer = curRound % 2;
+            boolean guessedPhrase = false;
+            while (!guessedPhrase) {
+                guessedPhrase = turn();
+
+                boolean allUncovered = true;
+                for(int i = 0; i < curPhrase.length && allUncovered; i++){
+                    allUncovered = curPhrase[i].indexOf('_') != -1;
+                }
+                guessedPhrase = guessedPhrase || allUncovered;
+
+                curPlayer = (curPlayer + 1) % 2;
+            }
+        } else {
+            if(money[0] > money[1]){
+                curPlayer = 0;
+            } else {
+                curPlayer = 1;
+            }
+            curWheel = new Wheel(640, 450, 320, finalWheelParts, c);
+
+            String result = spinWheel();
+            int prizeAmt;
+            if(result.equals("winner")){
+                prizeAmt = 1000000;
+            } else {
+                prizeAmt = Integer.parseInt(result.substring(1));
+            }
+            uncoverPhrases();
+            if(guessPhrase()){
+                money[curPlayer] += prizeAmt;
+                background.drawBackground();
+                drawStats();
+                c.setFont(new Font("Serif", Font.BOLD, 100));
+                c.setColor(Color.YELLOW);
+                c.drawString(names[curPlayer] + " has won", 400, 450);
+                c.drawString("$" + prizeAmt, 400, 560);
+                pause(1000);
+            } else {
+                c.setColor(Color.BLACK);
+                c.fillRect(200, 670, 950, 120);
+                c.setColor(Color.WHITE);
+                c.setFont(promptFont);
+                c.drawString("Unfortunately, that is incorrect", 400, 700);
+                c.setFont(smallPrompt);
+                c.drawString("Press any key to continue", 400, 790);
+                c.getChar();
+            }
+        }
+
+        uncovered = "";
     }
 
     public void play() {
@@ -421,9 +491,15 @@ public class Game {
         loadWheel();
         background.drawBackground();
         names = getNames();
+
+        finalRound = false;
         for (int i = 0; i < 3; i++) {
             round();
+            curRound++;
         }
+
+        finalRound = true;
+        round();
     }
 
     public static void main(String[] args) {
