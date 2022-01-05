@@ -14,10 +14,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-/*
-* TODO find out which phrases are too long to be displayed (they'll throw an ArrayOutOfBoundsException)
- */
-
 // Game class
 public class Game {
     int[] money; // the amount of money players have
