@@ -8,13 +8,14 @@ import java.io.IOException;
 public class Main {
     Console c;
 
-    private static final Font TITLE_FONT = new Font("IMPACT", Font.BOLD, 30);
-    private static final Font SUBTITLE_FONT = new Font("Kristen ITC", Font.BOLD, 18);
-    private static final Font PARAGRAPH_FONT = new Font("SansSerif", Font.BOLD, 10);
+    private static final Font TITLE_FONT = new Font("IMPACT", Font.BOLD, 50);
+    private static final Font SUBTITLE_FONT = new Font("Kristen ITC", Font.BOLD, 24);
+    private static final Font PARAGRAPH_FONT = new Font("SansSerif", Font.PLAIN, 14);
 
     // stores lines of the instructions pages
     String[] instructions;
     LeaderboardEntry[] entries;
+    private int entryCount;
 
     // constructor for the main class
     public Main() {
@@ -22,6 +23,7 @@ public class Main {
         // load data on object initialization (this pattern can be changed)
         try {
             loadInstructions();
+            loadScores();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -54,26 +56,26 @@ public class Main {
         while (true) {
             // clear previously displayed instructions
             c.setColor(Color.BLACK);
-            c.fillRect(110,160,430,300);
+            c.fillRect(350,200,600,500);
             c.setColor(Color.WHITE);
 
             // display the instruction page
             c.setFont(SUBTITLE_FONT);
-            c.drawString("Instructions - Page " + currentPage, 220, 180);
+            c.drawString("Instructions - Page " + currentPage, 510, 250);
 
             // display instruction content
             c.setFont(PARAGRAPH_FONT);
-            for (int i = (currentPage - 1) * linesPerPage, lineY = 220; i < (currentPage * linesPerPage); ++i, lineY += 20) {
-                c.drawString(instructions[i], 130, lineY);
+            for (int i = (currentPage - 1) * linesPerPage, lineY = 320; i < (currentPage * linesPerPage); ++i, lineY += 25) {
+                c.drawString(instructions[i], 410, lineY);
             }
 
             // display controls
             if (currentPage != 1) {
-                c.drawString("<Q> previous page", 150, 440);
+                c.drawString("<Q> previous page", 400, 640);
             }
-            c.drawString("<ENTER> main menu", 270, 440);
+            c.drawString("<ENTER> main menu", 580, 640);
             if (currentPage != 4) {
-                c.drawString("<E> next page", 400, 440);
+                c.drawString("<E> next page", 780, 640);
             }
 
             // get user input
@@ -104,7 +106,7 @@ public class Main {
         // draw the title
         c.setColor(Color.YELLOW);
         c.setFont(TITLE_FONT);
-        c.drawString("WHEEL OF FORTUNE", 190, 130);
+        c.drawString("WHEEL OF FORTUNE", 430, 160);
     }
 
     public void displaySplashScreen() {
@@ -115,12 +117,27 @@ public class Main {
 
     }
 
-    // loads scores into array
+    // loads scores.txt into array, in format `NAME:SCORE`
     private void loadScores() throws IOException {
-
+        BufferedReader br = new BufferedReader(new FileReader("data/scores.txt"));
+        // number of lines in the instructions page
+        entries = new LeaderboardEntry[1000];
+        // pointer to the index
+        int ptr = 0;
+        // variable to store read line
+        String ln;
+        // read until EOF
+        while ((ln = br.readLine()) != null) {
+            int spl = ln.indexOf(":");
+            String name = ln.substring(0, spl);
+            int score = Integer.parseInt(ln.substring(spl+1));
+            entries[ptr++] = new LeaderboardEntry(name, score);
+        }
+        entryCount = ptr;
+        System.out.println(entryCount);
     }
 
-    private void sortScores() throws IOException {
+    private void sortScores() {
         while (true) {
             // simple bubble sort algorithm
             // assume sorted
@@ -150,7 +167,7 @@ public class Main {
         }
     }
 
-    private void displayHighScore() {
+    private void displayScores() {
 
     }
 
