@@ -330,7 +330,7 @@ public class Game {
         // the rows in which we can display phrase
         int[] row = {400, 500, 600};
         // the number of characters to display per row
-        int numPerRow = 10;
+        int numPerRow = 12;
         // the resulting width of each character
         int width = 900 / numPerRow;
         // the increments in which to display the character - this adds a margin between each character
