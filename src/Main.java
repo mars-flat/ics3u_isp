@@ -12,6 +12,7 @@ public class Main {
     private static final int LEADERBOARD_ENTRIES_PER_PAGE = 10;
 
     private static final Font TITLE_FONT = new Font("IMPACT", Font.BOLD, 100);
+    private static final Font SUBHEAD_FONT = new Font("SansSerif", Font.BOLD, 60);
     private static final Font SUBTITLE_FONT = new Font("Kristen ITC", Font.BOLD, 24);
     private static final Font HEADING_FONT = new Font("SansSerif", Font.BOLD, 20);
     private static final Font PARAGRAPH_FONT = new Font("SansSerif", Font.PLAIN, 14);
@@ -69,6 +70,19 @@ public class Main {
         c.setFont(TITLE_FONT);
         c.drawString("WHEEL OF FORTUNE", 260, 200);
     } // displayName method
+
+    // draws a subheading
+    private void drawSubheading(String title, int x){
+        // set the color and font
+        c.setColor(Color.WHITE);
+        c.setFont(SUBHEAD_FONT);
+
+        // fill a line above the subheading
+        c.fillRect(300, 210, 680, 5);
+
+        // draw the subheading
+        c.drawString(title, x, 270);
+    } // subHeading method
 
     // displays the instructions for the game
     // requires multiple pages
@@ -330,9 +344,10 @@ public class Main {
     // displays the main menu and returns what the user selected upon pressing <ENTER>
     public char mainMenu() {
         // draw the background with the subtitle "Main Menu"
-        background.drawBackground("Main Menu", 500);
+        background.drawBackground();
         // display the game name
         displayName();
+        drawSubheading("Main Menu", 500);
 
         // draw 4 buttons, one for each option
         icon.drawButton("HIGH SCORE", 440, 350, 400, 70, 40);
