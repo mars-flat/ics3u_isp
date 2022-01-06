@@ -352,7 +352,7 @@ public class Main {
         drawSubheading("Main Menu", 500);
 
         // draw 4 buttons, one for each option
-        icon.drawButton("HIGH SCORE", 440, 350, 400, 70, 40);
+        icon.drawButton("LEADERBOARD", 440, 350, 400, 70, 8);
         icon.drawButton("INSTRUCTIONS", 440, 430, 400, 70, 10);
         icon.drawButton("PLAY", 440, 510, 400, 70, 140);
         icon.drawButton("QUIT", 440, 590, 400, 70, 140);

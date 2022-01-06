@@ -101,6 +101,10 @@ public class Game {
                 c.setColor(Color.WHITE);
                 c.drawString(playerNames[i], 130, 500);
             } // while they have not entered <ENTER>
+
+            if (playerNames[i].equals("")) {
+                i--;
+            }
         } // for both players
 
         // return the player names
@@ -875,6 +879,7 @@ public class Game {
             pw.println(names[1] + ":" + money[1]);
         } catch(IOException e){
             c.print(e.getMessage());
+            System.out.println(e.getMessage());
         } // try/catch for writing new scores
     } // writeScores method
 
