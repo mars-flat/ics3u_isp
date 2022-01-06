@@ -327,55 +327,75 @@ public class Main {
         }
     }
 
+    // displays the main menu and returns what the user selected upon pressing <ENTER>
     public char mainMenu() {
+        // draw the background with the subtitle "Main Menu"
         background.drawBackground("Main Menu", 500);
+        // display the game name
         displayName();
 
+        // draw 4 buttons, one for each option
         icon.drawButton("HIGH SCORE", 440, 350, 400, 70, 40);
         icon.drawButton("INSTRUCTIONS", 440, 430, 400, 70, 10);
         icon.drawButton("PLAY", 440, 510, 400, 70, 140);
         icon.drawButton("QUIT", 440, 590, 400, 70, 140);
 
+        // prompt the user to press <ENTER> to select or use w/s to navigate the menu
         c.setFont(PROMPT_FONT);
         c.setColor(Color.WHITE);
         c.drawString("Press <ENTER> to select", 510, 790);
         c.setFont(SMALL_PROMPT);
         c.drawString("Press 'S' to move the arrow down, Press 'W' to move the arrow up", 400, 750);
 
+        // the current position of the arrow
         int curPos = 0;
+
+        // the character that was pressed
         char pressed;
         do {
+            // draw the arrow at the current option (curPos)
             c.setColor(Color.BLACK);
             c.fillRect(200, 300, 239, 410);
             icon.drawArrow(370, 80 * curPos + 385);
+
+            // get the user input
             pressed = c.getChar();
 
             if (pressed == 'w') {
+                // if it is 'w', then try to move the arrow up
                 if (curPos > 0) {
                     curPos--;
-                }
+                } // if statement for moving the arrow up
             } else if (pressed == 's') {
+                // if it is 's', then try to move the arrow down
                 if (curPos < 3) {
                     curPos++;
-                }
+                } // if statement for moving the arrow down
             } else if (pressed != '\n'){
+                // if the character was invalid, then inform the user of such
                 new Message("Please press 'W', 'S', or <ENTER>");
-            }
-        } while (pressed != '\n');
+            } // if/else block for handling user input
+        } while (pressed != '\n'); // once the user presses <ENTER>, exit the loop
 
+        // switch for what option the user selected based on the current arrow position
         switch (curPos) {
             case 0:
+                // the top is "HIGH SCORE"
                 return 'h';
             case 1:
+                // the second is "INSTRUCTIONS"
                 return 'i';
             case 2:
+                // the third is "PLAY"
                 return 's';
             case 3:
+                // the fourth is "QUIT"
                 return 'e';
             default:
+                // if none of the above options were used, then we return an arbitrary character (should never happen)
                 return 'u';
-        }
-    }
+        } // switch for handling arrow position
+    } // mainMenu method
 
     public void play() {
         Game curGame = new Game(c);
