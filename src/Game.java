@@ -15,10 +15,10 @@ import java.nio.Buffer;
 
 // Game class
 public class Game {
-    private static final String PHRASE_PATH = "src/data/phrases.txt";
-    private static final String WHEEL_PATH = "src/data/wheel.txt";
-    private static final String FINAL_WHEEL_PATH = "src/data/final-wheel.txt";
-    private static final String SCORE_PATH = "src/data/scores.txt";
+    private static final String PHRASE_PATH = "data/phrases.txt";
+    private static final String WHEEL_PATH = "data/wheel.txt";
+    private static final String FINAL_WHEEL_PATH = "data/final-wheel.txt";
+    private static final String SCORE_PATH = "data/scores.txt";
 
     int[] money; // the amount of money players have
     Console c; // interface for graphics & input
