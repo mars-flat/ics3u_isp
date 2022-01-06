@@ -1,7 +1,15 @@
-import hsa.Console;
+/*
+* Daniel Ye and Shane Chen
+* Ms. Basaraba
+* January 6
+* This class is a component that is used throughout the rest of the program, drawing the Backgrounds in a variety of ways
+ */
 
+// imports
+import hsa.Console;
 import java.awt.*;
 
+// Background class
 public class Background{
     Console c;
     Color background;

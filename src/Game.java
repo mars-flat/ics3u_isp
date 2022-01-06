@@ -15,6 +15,11 @@ import java.nio.Buffer;
 
 // Game class
 public class Game {
+    private static final String PHRASE_PATH = "src/data/phrases.txt";
+    private static final String WHEEL_PATH = "src/data/wheel.txt";
+    private static final String FINAL_WHEEL_PATH = "src/data/final-wheel.txt";
+    private static final String SCORE_PATH = "src/data/scores.txt";
+
     int[] money; // the amount of money players have
     Console c; // interface for graphics & input
     String uncovered; // the uncovered letters
@@ -143,7 +148,7 @@ public class Game {
     private void loadPhrases() {
         try {
             // initialize a BufferedReader
-            BufferedReader lineReader = new BufferedReader(new FileReader("src/data/phrases.txt"));
+            BufferedReader lineReader = new BufferedReader(new FileReader(PHRASE_PATH));
             // the number of lines in phrases.txt
             int numLines = 0;
             // for each line, increment numLines
@@ -156,7 +161,7 @@ public class Game {
             phrases = new String[numLines][];
 
             // initialize a bufferedReader for reading the actual lines
-            BufferedReader br = new BufferedReader(new FileReader("src/data/phrases.txt"));
+            BufferedReader br = new BufferedReader(new FileReader(PHRASE_PATH));
             // the current line we are reading for
             int curLine = 0;
             // while the current line is not null (i.e, we have no reached the end of the file)
@@ -189,7 +194,7 @@ public class Game {
     private void loadWheel() {
         try {
             // declare and initialize a BufferedReader for wheel.txt
-            BufferedReader br = new BufferedReader(new FileReader("src/data/wheel.txt"));
+            BufferedReader br = new BufferedReader(new FileReader(WHEEL_PATH));
 
             // calculate the number of lines by looping through each line
             int numLines = 0;
@@ -200,7 +205,7 @@ public class Game {
             // initialize wheelParts to the number of lines
             wheelParts = new String[numLines];
             // reset the reader to the start of the file
-            br = new BufferedReader(new FileReader("src/data/wheel.txt"));
+            br = new BufferedReader(new FileReader(WHEEL_PATH));
             // read each line into wheelParts
             for (int i = 0; i < numLines; i++) {
                 wheelParts[i] = br.readLine();
@@ -209,7 +214,7 @@ public class Game {
             // initialize finalWheelParts to the number of lines
             finalWheelParts = new String[numLines];
             // reset the reader to read the file for the final wheel
-            br = new BufferedReader(new FileReader("src/data/final-wheel.txt"));
+            br = new BufferedReader(new FileReader(FINAL_WHEEL_PATH));
             // read each line into finalWheelParts
             for(int i = 0; i < numLines; i++){
                 finalWheelParts[i] = br.readLine();
@@ -863,7 +868,7 @@ public class Game {
     private void writeScores(){
         try{
             // open an appending printwriter to src/data/scores.txt
-            PrintWriter pw = new PrintWriter(new FileWriter("src/data/scores.txt", true));
+            PrintWriter pw = new PrintWriter(new FileWriter(SCORE_PATH, true));
 
             // append two lines, one for each player
             pw.println(names[0] + ":" + money[0]);
