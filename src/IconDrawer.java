@@ -13,9 +13,9 @@ public class IconDrawer {
     }
 
     public void drawArrow(int x, int y){
-        c.setColor(new Color(0, 255, 255));
-        c.fillRect(x, y-10, 40, 20);
-        int[] xPoints = {x + 40, x + 60, x + 40};
+        c.setColor(new Color(86, 131, 255));
+        c.fillRect(x, y-10, 30, 20);
+        int[] xPoints = {x + 30, x + 50, x + 30};
         int[] yPoints = {y - 20, y, y + 20};
         c.fillPolygon(xPoints, yPoints, 3);
     }

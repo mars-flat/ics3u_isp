@@ -5,7 +5,6 @@ import java.awt.*;
 public class Background{
     Console c;
     Color background;
-    Color dust;
     Color fabric;
     Color topFabric;
 
@@ -14,7 +13,6 @@ public class Background{
     public Background(Console con){
         c = con;
         background = Color.BLACK;
-        dust = Color.WHITE;
         fabric = new Color(200, 0, 0);
         topFabric = new Color(255, 0, 0);
 

@@ -1,4 +1,5 @@
 import hsa.Console;
+import hsa.Message;
 
 import java.awt.*;
 import java.io.BufferedReader;
@@ -14,11 +15,19 @@ public class Main {
     private static final Font SUBTITLE_FONT = new Font("Kristen ITC", Font.BOLD, 24);
     private static final Font HEADING_FONT = new Font("SansSerif", Font.BOLD, 20);
     private static final Font PARAGRAPH_FONT = new Font("SansSerif", Font.PLAIN, 14);
+    private static final Font SMALL_PROMPT = new Font("Serif", Font.PLAIN, 24);
+
+    private static final String SCORE_PATH = "src/data/scores.txt";
+    private static final String INSTRUCTIONS_PATH = "src/data/instructions.txt";
+
+    IconDrawer icon;
 
     // stores lines of the instructions pages
     String[] instructions;
     LeaderboardEntry[] entries;
     private int entryCount;
+
+    Background background;
 
     // constructor for the main class
     public Main() {
@@ -30,10 +39,16 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        // add the IconDrawer object, allowing us to draw icons
+        icon = new IconDrawer(c);
+
+        // initialize the background
+        background = new Background(c);
     }
 
     private void loadInstructions() throws IOException {
-        BufferedReader br = new BufferedReader(new FileReader("data/instructions.txt"));
+        BufferedReader br = new BufferedReader(new FileReader(INSTRUCTIONS_PATH));
         // number of lines in the instructions page
         instructions = new String[50];
         // pointer to the index
@@ -101,28 +116,90 @@ public class Main {
         }
     }
 
+    // returns a string array of length [length] with empty elements
+    private String[] emptyStrings(int length){
+        // initialize a string array
+        String[] emptyStrings = new String[length];
+
+        // fill it with blank strings
+        for(int i = 0; i < emptyStrings.length; i++){
+            emptyStrings[i] = "";
+        }
+
+        // return the empty string array
+        return emptyStrings;
+    } // emptyStrings method
+
+    // displays the title
     public void displayTitle() {
         // draw the background
-        Background b = new Background(c);
-        b.drawBackground();
+        background.drawBackground();
 
         // draw the title
         c.setColor(Color.YELLOW);
         c.setFont(TITLE_FONT);
         c.drawString("WHEEL OF FORTUNE", 430, 160);
-    }
 
+        // draw the option to begin
+        icon.drawButton("START", 490, 670, 300, 60, 60);
+        icon.drawArrow(420, 700);
+
+        // start a thread for the spinning wheel
+        Wheel spinning = new Wheel(640, 400, 200, emptyStrings(10), c);
+        Thread t = new Thread(spinning);
+        t.start();
+
+        // prompt and wait for the user to continue
+        c.setFont(SMALL_PROMPT);
+        c.setColor(Color.WHITE);
+        c.drawString("Press <ENTER> to select", 510, 790);
+        while(c.getChar() != '\n'){
+            new Message("Please press <ENTER>");
+        }
+
+        // stop the wheel
+        spinning.stop();
+
+        // wait for the thread to die before continuing
+        try{
+            t.join();
+        } catch(InterruptedException e){
+            c.print(e.getMessage());
+        } // try/catch for wheel stopping
+    } // displayTitle method
+
+    // pauses the program for [millis] milliseconds
+    private void pause(int millis){
+        // sleep for millis milliseconds
+        try{
+            Thread.sleep(millis);
+        } catch(InterruptedException e){
+            c.print(e.getMessage());
+        } // try/catch for sleeping
+    } // pause method
+
+    // animates the splash screen
     public void displaySplashScreen() {
+        // displays the splash screen
+        Wheel middle = new Wheel(640, 400, 200, emptyStrings(10), c);
 
-    }
+        // animate the background coming in through a for loop
+        for(int i = 0; i <= 100; i += 5){
+            background.drawBackground(i);
+            middle.animate(i);
+            pause(50);
+        } // for loop for background animation
 
-    private void loadPhrases() {
-
-    }
+        // let the wheel continue animating for a while
+        for(int i = 100; i <= 300; i += 5){
+            middle.animate(i);
+            pause(50);
+        } // for loop for wheel spinning
+    } // displaySplashScreen method
 
     // loads scores.txt into array, in format `NAME:SCORE`
     private void loadScores() throws IOException {
-        BufferedReader br = new BufferedReader(new FileReader("data/scores.txt"));
+        BufferedReader br = new BufferedReader(new FileReader(SCORE_PATH));
         // number of lines in the instructions page
         entries = new LeaderboardEntry[1000];
         // pointer to the index
@@ -171,6 +248,9 @@ public class Main {
     }
 
     private void displayScores() {
+        // refresh the background
+        background.drawBackground();
+
         sortScores();
         // get total pages
         int pages = entryCount / LEADERBOARD_ENTRIES_PER_PAGE;
@@ -250,6 +330,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
         Main m = new Main();
         m.displayTitle();
+        m.displaySplashScreen();
         m.displayScores();
         System.exit(0);
     }
