@@ -18,8 +18,8 @@ public class Main {
     private static final Font PROMPT_FONT = new Font("Serif", Font.PLAIN, 24);
     private static final Font SMALL_PROMPT = new Font("Serif", Font.PLAIN, 18);
 
-    private static final String SCORE_PATH = "src/data/scores.txt";
-    private static final String INSTRUCTIONS_PATH = "src/data/instructions.txt";
+    private static final String SCORE_PATH = "data/scores.txt";
+    private static final String INSTRUCTIONS_PATH = "data/instructions.txt";
 
     IconDrawer icon;
 
@@ -83,26 +83,26 @@ public class Main {
         while (true) {
             // clear previously displayed instructions
             c.setColor(Color.BLACK);
-            c.fillRect(350, 200, 600, 500);
+            c.fillRect(300, 200, 700, 600);
             c.setColor(Color.WHITE);
 
             // display the instruction page
             c.setFont(SUBTITLE_FONT);
-            c.drawString("Instructions - Page " + currentPage, 510, 250);
+            c.drawString("Instructions - Page " + currentPage, 510, 290);
 
             // display instruction content
             c.setFont(PARAGRAPH_FONT);
-            for (int i = (currentPage - 1) * linesPerPage, lineY = 320; i < (currentPage * linesPerPage); ++i, lineY += 25) {
+            for (int i = (currentPage - 1) * linesPerPage, lineY = 360; i < (currentPage * linesPerPage); ++i, lineY += 25) {
                 c.drawString(instructions[i], 410, lineY);
             }
 
             // display controls
             if (currentPage != 1) {
-                c.drawString("<Q> previous page", 400, 640);
+                c.drawString("<Q> previous page", 400, 680);
             }
-            c.drawString("<ENTER> main menu", 580, 640);
+            c.drawString("<ENTER> main menu", 580, 680);
             if (currentPage != 4) {
-                c.drawString("<E> next page", 780, 640);
+                c.drawString("<E> next page", 780, 680);
             }
 
             // get user input
@@ -219,7 +219,6 @@ public class Main {
             entries[ptr++] = new LeaderboardEntry(name, score);
         }
         entryCount = ptr;
-        System.out.println(entryCount);
     }
 
     private void sortScores() {
@@ -252,17 +251,20 @@ public class Main {
         }
     }
 
-    private void displayScores() {
+    private void displayScores() throws IOException {
         // refresh the background
         background.drawBackground();
+        displayName();
 
+        //reload scores
+        loadScores();
+        // sort scores
         sortScores();
         // get total pages
         int pages = entryCount / LEADERBOARD_ENTRIES_PER_PAGE;
         if (entryCount % LEADERBOARD_ENTRIES_PER_PAGE != 0) {
             pages++;
         }
-        System.out.println(pages);
 
         // current page, default to 1
         int currentPage = 1;
@@ -271,7 +273,7 @@ public class Main {
         while (true) {
             // clear previous listings
             c.setColor(Color.BLACK);
-            c.fillRect(340, 200, 600, 550);
+            c.fillRect(340, 240, 600, 550);
             c.setColor(Color.WHITE);
 
             // subtitle
@@ -327,55 +329,75 @@ public class Main {
         }
     }
 
+    // displays the main menu and returns what the user selected upon pressing <ENTER>
     public char mainMenu() {
+        // draw the background with the subtitle "Main Menu"
         background.drawBackground("Main Menu", 500);
+        // display the game name
         displayName();
 
-        icon.drawButton("HIGH SCORE", 440, 350, 400, 70, 40);
+        // draw 4 buttons, one for each option
+        icon.drawButton("LEADERBOARD", 440, 350, 400, 70, 8);
         icon.drawButton("INSTRUCTIONS", 440, 430, 400, 70, 10);
         icon.drawButton("PLAY", 440, 510, 400, 70, 140);
         icon.drawButton("QUIT", 440, 590, 400, 70, 140);
 
+        // prompt the user to press <ENTER> to select or use w/s to navigate the menu
         c.setFont(PROMPT_FONT);
         c.setColor(Color.WHITE);
         c.drawString("Press <ENTER> to select", 510, 790);
         c.setFont(SMALL_PROMPT);
         c.drawString("Press 'S' to move the arrow down, Press 'W' to move the arrow up", 400, 750);
 
+        // the current position of the arrow
         int curPos = 0;
+
+        // the character that was pressed
         char pressed;
         do {
+            // draw the arrow at the current option (curPos)
             c.setColor(Color.BLACK);
             c.fillRect(200, 300, 239, 410);
             icon.drawArrow(370, 80 * curPos + 385);
+
+            // get the user input
             pressed = c.getChar();
 
             if (pressed == 'w') {
+                // if it is 'w', then try to move the arrow up
                 if (curPos > 0) {
                     curPos--;
-                }
+                } // if statement for moving the arrow up
             } else if (pressed == 's') {
+                // if it is 's', then try to move the arrow down
                 if (curPos < 3) {
                     curPos++;
-                }
+                } // if statement for moving the arrow down
             } else if (pressed != '\n'){
+                // if the character was invalid, then inform the user of such
                 new Message("Please press 'W', 'S', or <ENTER>");
-            }
-        } while (pressed != '\n');
+            } // if/else block for handling user input
+        } while (pressed != '\n'); // once the user presses <ENTER>, exit the loop
 
+        // switch for what option the user selected based on the current arrow position
         switch (curPos) {
             case 0:
+                // the top is "HIGH SCORE"
                 return 'h';
             case 1:
+                // the second is "INSTRUCTIONS"
                 return 'i';
             case 2:
+                // the third is "PLAY"
                 return 's';
             case 3:
+                // the fourth is "QUIT"
                 return 'e';
             default:
+                // if none of the above options were used, then we return an arbitrary character (should never happen)
                 return 'u';
-        }
-    }
+        } // switch for handling arrow position
+    } // mainMenu method
 
     public void play() {
         Game curGame = new Game(c);

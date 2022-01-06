@@ -34,8 +34,14 @@ public class Game {
     public static int MAX_NAME_LENGTH = 12; // the maximum length for a name
     public static final String ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; // the alphabet
 
+    private static final String PHRASES_PATH = "data/phrases.txt";
+    private static final String WHEEL_PATH = "data/wheel.txt";
+    private static final String FINAL_WHEEL_PATH = "data/final-wheel.txt";
+    private static final String SCORE_PATH = "data/scores.txt";
+
     // class constructor
     public Game(Console con) {
+
         // set the user interface (Console c)
         c = con;
 
@@ -143,7 +149,7 @@ public class Game {
     private void loadPhrases() {
         try {
             // initialize a BufferedReader
-            BufferedReader lineReader = new BufferedReader(new FileReader("src/data/phrases.txt"));
+            BufferedReader lineReader = new BufferedReader(new FileReader(PHRASES_PATH));
             // the number of lines in phrases.txt
             int numLines = 0;
             // for each line, increment numLines
@@ -156,7 +162,7 @@ public class Game {
             phrases = new String[numLines][];
 
             // initialize a bufferedReader for reading the actual lines
-            BufferedReader br = new BufferedReader(new FileReader("src/data/phrases.txt"));
+            BufferedReader br = new BufferedReader(new FileReader(PHRASES_PATH));
             // the current line we are reading for
             int curLine = 0;
             // while the current line is not null (i.e, we have no reached the end of the file)
@@ -167,6 +173,7 @@ public class Game {
             } // while loop for each line
         } catch (IOException e) {
             c.print(e.getMessage());
+            //System.out.println(e.getMessage());
         } // try/catch for BufferedReader
     } // loadPhrases method
 
@@ -189,7 +196,7 @@ public class Game {
     private void loadWheel() {
         try {
             // declare and initialize a BufferedReader for wheel.txt
-            BufferedReader br = new BufferedReader(new FileReader("src/data/wheel.txt"));
+            BufferedReader br = new BufferedReader(new FileReader(WHEEL_PATH));
 
             // calculate the number of lines by looping through each line
             int numLines = 0;
@@ -200,7 +207,7 @@ public class Game {
             // initialize wheelParts to the number of lines
             wheelParts = new String[numLines];
             // reset the reader to the start of the file
-            br = new BufferedReader(new FileReader("src/data/wheel.txt"));
+            br = new BufferedReader(new FileReader(WHEEL_PATH));
             // read each line into wheelParts
             for (int i = 0; i < numLines; i++) {
                 wheelParts[i] = br.readLine();
@@ -209,7 +216,7 @@ public class Game {
             // initialize finalWheelParts to the number of lines
             finalWheelParts = new String[numLines];
             // reset the reader to read the file for the final wheel
-            br = new BufferedReader(new FileReader("src/data/final-wheel.txt"));
+            br = new BufferedReader(new FileReader(FINAL_WHEEL_PATH));
             // read each line into finalWheelParts
             for(int i = 0; i < numLines; i++){
                 finalWheelParts[i] = br.readLine();
@@ -691,7 +698,7 @@ public class Game {
         for(int i = 0; i < ansPhrase.length; i++){
             System.out.print(ansPhrase[i] + " ");
         }
-        System.out.println();
+        //System.out.println();
 
         // if it isn't the final round
         if(!finalRound){
@@ -757,8 +764,8 @@ public class Game {
                 // inform the users that the current player has guessed right and won $prizeAmt
                 c.setFont(new Font("Serif", Font.BOLD, 100));
                 c.setColor(Color.YELLOW);
-                c.drawString(names[curPlayer] + " has won", 400, 450);
-                c.drawString("$" + prizeAmt, 400, 560);
+                c.drawString(names[curPlayer] + " has won", 200, 450);
+                c.drawString("$" + prizeAmt, 200, 560);
 
                 // prompt the user to press a key to continue
                 c.setColor(Color.WHITE);
@@ -863,13 +870,14 @@ public class Game {
     private void writeScores(){
         try{
             // open an appending printwriter to src/data/scores.txt
-            PrintWriter pw = new PrintWriter(new FileWriter("src/data/scores.txt", true));
+            PrintWriter pw = new PrintWriter(new FileWriter(SCORE_PATH, true));
 
             // append two lines, one for each player
             pw.println(names[0] + ":" + money[0]);
             pw.println(names[1] + ":" + money[1]);
         } catch(IOException e){
             c.print(e.getMessage());
+            //System.out.println(e.getMessage());
         } // try/catch for writing new scores
     } // writeScores method
 
