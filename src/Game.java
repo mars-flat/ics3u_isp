@@ -1,8 +1,8 @@
 /*
-* Shane Chen & Daniel Ye
-* Ms. Basaraba
-* January 1
-* This class is a component of Main.java - this simulates the ingame processes of Wheel of Fortune, void of menus and the like
+ * Shane Chen & Daniel Ye
+ * Ms. Basaraba
+ * January 1
+ * This class is a component of Main.java - this simulates the ingame processes of Wheel of Fortune, void of menus and the like
  */
 
 
@@ -15,6 +15,11 @@ import java.nio.Buffer;
 
 // Game class
 public class Game {
+    private static final String PHRASE_PATH = "src/data/phrases.txt";
+    private static final String WHEEL_PATH = "src/data/wheel.txt";
+    private static final String FINAL_WHEEL_PATH = "src/data/final-wheel.txt";
+    private static final String SCORE_PATH = "src/data/scores.txt";
+
     int[] money; // the amount of money players have
     Console c; // interface for graphics & input
     String uncovered; // the uncovered letters
@@ -34,14 +39,8 @@ public class Game {
     public static int MAX_NAME_LENGTH = 12; // the maximum length for a name
     public static final String ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; // the alphabet
 
-    private static final String PHRASES_PATH = "data/phrases.txt";
-    private static final String WHEEL_PATH = "data/wheel.txt";
-    private static final String FINAL_WHEEL_PATH = "data/final-wheel.txt";
-    private static final String SCORE_PATH = "data/scores.txt";
-
     // class constructor
     public Game(Console con) {
-
         // set the user interface (Console c)
         c = con;
 
@@ -149,7 +148,7 @@ public class Game {
     private void loadPhrases() {
         try {
             // initialize a BufferedReader
-            BufferedReader lineReader = new BufferedReader(new FileReader(PHRASES_PATH));
+            BufferedReader lineReader = new BufferedReader(new FileReader(PHRASE_PATH));
             // the number of lines in phrases.txt
             int numLines = 0;
             // for each line, increment numLines
@@ -162,7 +161,7 @@ public class Game {
             phrases = new String[numLines][];
 
             // initialize a bufferedReader for reading the actual lines
-            BufferedReader br = new BufferedReader(new FileReader(PHRASES_PATH));
+            BufferedReader br = new BufferedReader(new FileReader(PHRASE_PATH));
             // the current line we are reading for
             int curLine = 0;
             // while the current line is not null (i.e, we have no reached the end of the file)
@@ -173,7 +172,6 @@ public class Game {
             } // while loop for each line
         } catch (IOException e) {
             c.print(e.getMessage());
-            //System.out.println(e.getMessage());
         } // try/catch for BufferedReader
     } // loadPhrases method
 
@@ -698,7 +696,7 @@ public class Game {
         for(int i = 0; i < ansPhrase.length; i++){
             System.out.print(ansPhrase[i] + " ");
         }
-        //System.out.println();
+        System.out.println();
 
         // if it isn't the final round
         if(!finalRound){
@@ -764,8 +762,8 @@ public class Game {
                 // inform the users that the current player has guessed right and won $prizeAmt
                 c.setFont(new Font("Serif", Font.BOLD, 100));
                 c.setColor(Color.YELLOW);
-                c.drawString(names[curPlayer] + " has won", 200, 450);
-                c.drawString("$" + prizeAmt, 200, 560);
+                c.drawString(names[curPlayer] + " has won", 400, 450);
+                c.drawString("$" + prizeAmt, 400, 560);
 
                 // prompt the user to press a key to continue
                 c.setColor(Color.WHITE);
@@ -877,7 +875,6 @@ public class Game {
             pw.println(names[1] + ":" + money[1]);
         } catch(IOException e){
             c.print(e.getMessage());
-            //System.out.println(e.getMessage());
         } // try/catch for writing new scores
     } // writeScores method
 
@@ -902,6 +899,9 @@ public class Game {
         // play one final round
         finalRound = true;
         round();
+
+        // write the scores
+        writeScores();
 
         // display the winner
         displayWinner();
