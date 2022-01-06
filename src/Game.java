@@ -10,9 +10,8 @@
 import hsa.Console;
 import hsa.Message;
 import java.awt.*;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.nio.Buffer;
 
 // Game class
 public class Game {
@@ -859,6 +858,20 @@ public class Game {
             c.print(e.getMessage());
         } // try/catch for thread join
     } // displayWinner method
+
+    // appends the scores to src/data/scores.txt
+    private void writeScores(){
+        try{
+            // open an appending printwriter to src/data/scores.txt
+            PrintWriter pw = new PrintWriter(new FileWriter("src/data/scores.txt", true));
+
+            // append two lines, one for each player
+            pw.println(names[0] + ":" + money[0]);
+            pw.println(names[1] + ":" + money[1]);
+        } catch(IOException e){
+            c.print(e.getMessage());
+        } // try/catch for writing new scores
+    } // writeScores method
 
     // player method
     public void play() {

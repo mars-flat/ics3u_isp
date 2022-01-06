@@ -243,7 +243,8 @@ public class Main {
     }
 
     public void play() {
-
+        Game curGame = new Game(c);
+        curGame.play();
     }
 
     public static void main(String[] args) throws IOException {
