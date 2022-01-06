@@ -324,7 +324,7 @@ public class Game {
     // draws the blanks and uncovered parts of the phrase - white rectangles if it has not been uncovered and blue rectangles if it has
     private void drawBlanks(String[] words) {
         // the rows in which we can display phrase
-        int[] row = {400, 500, 600};
+        int[] row = {400, 500, 600, 700, 800};
         // the number of characters to display per row
         int numPerRow = 12;
         // the resulting width of each character
@@ -585,7 +585,7 @@ public class Game {
             c.setColor(Color.YELLOW);
             c.drawString(names[curPlayer] + " uncovered ", 210, 300);
             c.drawString(numUncovered + " letters, ", 210, 380);
-            c.drawString("Gaining him $" + result.substring(1) + " x " + numUncovered + " = $" + amtGain + "!", 210, 460);
+            c.drawString("Gaining them $" + result.substring(1) + " x " + numUncovered + " = $" + amtGain + "!", 210, 460);
 
             // prompt the user to continue by pressing a key
             c.setColor(Color.WHITE);

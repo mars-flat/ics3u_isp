@@ -8,8 +8,11 @@ import java.io.IOException;
 public class Main {
     Console c;
 
+    private static final int LEADERBOARD_ENTRIES_PER_PAGE = 10;
+
     private static final Font TITLE_FONT = new Font("IMPACT", Font.BOLD, 50);
     private static final Font SUBTITLE_FONT = new Font("Kristen ITC", Font.BOLD, 24);
+    private static final Font HEADING_FONT = new Font("SansSerif", Font.BOLD, 20);
     private static final Font PARAGRAPH_FONT = new Font("SansSerif", Font.PLAIN, 14);
 
     // stores lines of the instructions pages
@@ -139,13 +142,13 @@ public class Main {
 
     private void sortScores() {
         while (true) {
-            // simple bubble sort algorithm
+            // simple bubble sort algorithm, reverse order
             // assume sorted
             boolean sorted = true;
             // check if sorted
-            for (int i = 1; i < entries.length; ++i) {
+            for (int i = 1; i < entryCount; ++i) {
                 // if current entry is less than previous, it's not sorted
-                if (entries[i].score < entries[i-1].score) {
+                if (entries[i].score > entries[i-1].score) {
                     sorted = false;
 
                     // swap the two entries
@@ -154,7 +157,7 @@ public class Main {
                     entries[i-1] = temp;
 
                     // if entries are equal and the current string is lexicographically less than the previous, it's not sorted
-                } else if (entries[i].score == entries[i-1].score && entries[i].entryName.compareTo(entries[i-1].entryName) > 0) {
+                } else if (entries[i].score == entries[i-1].score && entries[i].entryName.compareTo(entries[i-1].entryName) < 0) {
                     sorted = false;
 
                     // swap the two entries
@@ -168,7 +171,75 @@ public class Main {
     }
 
     private void displayScores() {
+        sortScores();
+        // get total pages
+        int pages = entryCount / LEADERBOARD_ENTRIES_PER_PAGE;
+        if (entryCount % LEADERBOARD_ENTRIES_PER_PAGE != 0) {
+            pages++;
+        }
+        System.out.println(pages);
 
+        // current page, default to 1
+        int currentPage = 1;
+
+        // main display/ui loop
+        while (true) {
+            // clear previous listings
+            c.setColor(Color.BLACK);
+            c.fillRect(340,200,600,550);
+            c.setColor(Color.WHITE);
+
+            // subtitle
+            c.setFont(SUBTITLE_FONT);
+            c.drawString("Leaderboard - Page " + currentPage, 510, 250);
+
+            c.setColor(Color.GREEN);
+
+            // borders
+            c.drawLine(400,300,880,300);
+            c.drawLine(400,340,880,340);
+            c.drawLine(640,290,640,660);
+
+            // column heading
+            c.setFont(HEADING_FONT);
+            c.drawString("PLAYER", 420, 330);
+            c.drawString("SCORE", 660, 330);
+
+            // entries
+            c.setFont(PARAGRAPH_FONT);
+            int yCoordinate = 370;
+            for (int index = (currentPage - 1) * LEADERBOARD_ENTRIES_PER_PAGE;
+                 index < Math.min((currentPage - 1) * LEADERBOARD_ENTRIES_PER_PAGE + LEADERBOARD_ENTRIES_PER_PAGE, entryCount);
+                 ++index) {
+                c.drawString((index+1) + ". " + entries[index].entryName, 420, yCoordinate);
+                c.drawString("" + entries[index].score, 660, yCoordinate);
+                yCoordinate += 30;
+            }
+
+            // controls
+            // display controls
+            if (currentPage > 1) {
+                c.drawString("<Q> previous page", 400, 720);
+            }
+            c.drawString("<ENTER> main menu", 570, 720);
+            if (currentPage < pages) {
+                c.drawString("<E> next page", 790, 720);
+            }
+
+            // handle user input
+            char pressed = c.getChar();
+            if (pressed == 10) { // leave screen
+                return;
+            } else if (pressed == 'e' || pressed == 'E') { // next page, if applicable
+                if (currentPage < pages) {
+                    currentPage++;
+                }
+            } else if (pressed == 'q' || pressed == 'Q') { // previous page, if applicable
+                if (currentPage > 1) {
+                    currentPage--;
+                }
+            }
+        }
     }
 
     public void play() {
@@ -178,7 +249,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
         Main m = new Main();
         m.displayTitle();
-        m.displayInstructions();
+        m.displayScores();
         System.exit(0);
     }
 }
