@@ -766,8 +766,8 @@ public class Game {
                 // inform the users that the current player has guessed right and won $prizeAmt
                 c.setFont(new Font("Serif", Font.BOLD, 100));
                 c.setColor(Color.YELLOW);
-                c.drawString(names[curPlayer] + " has won", 400, 450);
-                c.drawString("$" + prizeAmt, 400, 560);
+                c.drawString(names[curPlayer] + " has won", 200, 450);
+                c.drawString("$" + prizeAmt, 200, 560);
 
                 // prompt the user to press a key to continue
                 c.setColor(Color.WHITE);
@@ -873,13 +873,13 @@ public class Game {
         try{
             // open an appending printwriter to src/data/scores.txt
             PrintWriter pw = new PrintWriter(new FileWriter(SCORE_PATH, true));
-
             // append two lines, one for each player
             pw.println(names[0] + ":" + money[0]);
             pw.println(names[1] + ":" + money[1]);
+            pw.close();
         } catch(IOException e){
             c.print(e.getMessage());
-            System.out.println(e.getMessage());
+            //System.out.println(e.getMessage());
         } // try/catch for writing new scores
     } // writeScores method
 
