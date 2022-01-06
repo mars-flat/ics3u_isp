@@ -11,11 +11,12 @@ public class Main {
 
     private static final int LEADERBOARD_ENTRIES_PER_PAGE = 10;
 
-    private static final Font TITLE_FONT = new Font("IMPACT", Font.BOLD, 50);
+    private static final Font TITLE_FONT = new Font("IMPACT", Font.BOLD, 100);
     private static final Font SUBTITLE_FONT = new Font("Kristen ITC", Font.BOLD, 24);
     private static final Font HEADING_FONT = new Font("SansSerif", Font.BOLD, 20);
     private static final Font PARAGRAPH_FONT = new Font("SansSerif", Font.PLAIN, 14);
-    private static final Font SMALL_PROMPT = new Font("Serif", Font.PLAIN, 24);
+    private static final Font PROMPT_FONT = new Font("Serif", Font.PLAIN, 24);
+    private static final Font SMALL_PROMPT = new Font("Serif", Font.PLAIN, 18);
 
     private static final String SCORE_PATH = "src/data/scores.txt";
     private static final String INSTRUCTIONS_PATH = "src/data/instructions.txt";
@@ -61,6 +62,14 @@ public class Main {
         }
     }
 
+    // displays the game name
+    private void displayName() {
+        // draw "WHEEL OF FORTUNE" at the top
+        c.setColor(Color.YELLOW);
+        c.setFont(TITLE_FONT);
+        c.drawString("WHEEL OF FORTUNE", 260, 200);
+    } // displayName method
+
     // displays the instructions for the game
     // requires multiple pages
     public void displayInstructions() {
@@ -74,7 +83,7 @@ public class Main {
         while (true) {
             // clear previously displayed instructions
             c.setColor(Color.BLACK);
-            c.fillRect(350,200,600,500);
+            c.fillRect(350, 200, 600, 500);
             c.setColor(Color.WHITE);
 
             // display the instruction page
@@ -117,12 +126,12 @@ public class Main {
     }
 
     // returns a string array of length [length] with empty elements
-    private String[] emptyStrings(int length){
+    private String[] emptyStrings(int length) {
         // initialize a string array
         String[] emptyStrings = new String[length];
 
         // fill it with blank strings
-        for(int i = 0; i < emptyStrings.length; i++){
+        for (int i = 0; i < emptyStrings.length; i++) {
             emptyStrings[i] = "";
         }
 
@@ -134,26 +143,22 @@ public class Main {
     public void displayTitle() {
         // draw the background
         background.drawBackground();
-
-        // draw the title
-        c.setColor(Color.YELLOW);
-        c.setFont(TITLE_FONT);
-        c.drawString("WHEEL OF FORTUNE", 430, 160);
+        displayName();
 
         // draw the option to begin
         icon.drawButton("START", 490, 670, 300, 60, 60);
         icon.drawArrow(420, 700);
 
         // start a thread for the spinning wheel
-        Wheel spinning = new Wheel(640, 400, 200, emptyStrings(10), c);
+        Wheel spinning = new Wheel(640, 430, 200, emptyStrings(10), c);
         Thread t = new Thread(spinning);
         t.start();
 
         // prompt and wait for the user to continue
-        c.setFont(SMALL_PROMPT);
+        c.setFont(PROMPT_FONT);
         c.setColor(Color.WHITE);
         c.drawString("Press <ENTER> to select", 510, 790);
-        while(c.getChar() != '\n'){
+        while (c.getChar() != '\n') {
             new Message("Please press <ENTER>");
         }
 
@@ -161,19 +166,19 @@ public class Main {
         spinning.stop();
 
         // wait for the thread to die before continuing
-        try{
+        try {
             t.join();
-        } catch(InterruptedException e){
+        } catch (InterruptedException e) {
             c.print(e.getMessage());
         } // try/catch for wheel stopping
     } // displayTitle method
 
     // pauses the program for [millis] milliseconds
-    private void pause(int millis){
+    private void pause(int millis) {
         // sleep for millis milliseconds
-        try{
+        try {
             Thread.sleep(millis);
-        } catch(InterruptedException e){
+        } catch (InterruptedException e) {
             c.print(e.getMessage());
         } // try/catch for sleeping
     } // pause method
@@ -184,14 +189,14 @@ public class Main {
         Wheel middle = new Wheel(640, 400, 200, emptyStrings(10), c);
 
         // animate the background coming in through a for loop
-        for(int i = 0; i <= 100; i += 5){
+        for (int i = 0; i <= 100; i += 5) {
             background.drawBackground(i);
             middle.animate(i);
             pause(50);
         } // for loop for background animation
 
         // let the wheel continue animating for a while
-        for(int i = 100; i <= 300; i += 5){
+        for (int i = 100; i <= 300; i += 5) {
             middle.animate(i);
             pause(50);
         } // for loop for wheel spinning
@@ -210,7 +215,7 @@ public class Main {
         while ((ln = br.readLine()) != null) {
             int spl = ln.indexOf(":");
             String name = ln.substring(0, spl);
-            int score = Integer.parseInt(ln.substring(spl+1));
+            int score = Integer.parseInt(ln.substring(spl + 1));
             entries[ptr++] = new LeaderboardEntry(name, score);
         }
         entryCount = ptr;
@@ -225,22 +230,22 @@ public class Main {
             // check if sorted
             for (int i = 1; i < entryCount; ++i) {
                 // if current entry is less than previous, it's not sorted
-                if (entries[i].score > entries[i-1].score) {
+                if (entries[i].score > entries[i - 1].score) {
                     sorted = false;
 
                     // swap the two entries
                     LeaderboardEntry temp = entries[i];
-                    entries[i] = entries[i-1];
-                    entries[i-1] = temp;
+                    entries[i] = entries[i - 1];
+                    entries[i - 1] = temp;
 
                     // if entries are equal and the current string is lexicographically less than the previous, it's not sorted
-                } else if (entries[i].score == entries[i-1].score && entries[i].entryName.compareTo(entries[i-1].entryName) < 0) {
+                } else if (entries[i].score == entries[i - 1].score && entries[i].entryName.compareTo(entries[i - 1].entryName) < 0) {
                     sorted = false;
 
                     // swap the two entries
                     LeaderboardEntry temp = entries[i];
-                    entries[i] = entries[i-1];
-                    entries[i-1] = temp;
+                    entries[i] = entries[i - 1];
+                    entries[i - 1] = temp;
                 }
             }
             if (sorted) return;
@@ -266,7 +271,7 @@ public class Main {
         while (true) {
             // clear previous listings
             c.setColor(Color.BLACK);
-            c.fillRect(340,200,600,550);
+            c.fillRect(340, 200, 600, 550);
             c.setColor(Color.WHITE);
 
             // subtitle
@@ -276,9 +281,9 @@ public class Main {
             c.setColor(Color.GREEN);
 
             // borders
-            c.drawLine(400,300,880,300);
-            c.drawLine(400,340,880,340);
-            c.drawLine(640,290,640,660);
+            c.drawLine(400, 300, 880, 300);
+            c.drawLine(400, 340, 880, 340);
+            c.drawLine(640, 290, 640, 660);
 
             // column heading
             c.setFont(HEADING_FONT);
@@ -291,7 +296,7 @@ public class Main {
             for (int index = (currentPage - 1) * LEADERBOARD_ENTRIES_PER_PAGE;
                  index < Math.min((currentPage - 1) * LEADERBOARD_ENTRIES_PER_PAGE + LEADERBOARD_ENTRIES_PER_PAGE, entryCount);
                  ++index) {
-                c.drawString((index+1) + ". " + entries[index].entryName, 420, yCoordinate);
+                c.drawString((index + 1) + ". " + entries[index].entryName, 420, yCoordinate);
                 c.drawString("" + entries[index].score, 660, yCoordinate);
                 yCoordinate += 30;
             }
@@ -322,6 +327,56 @@ public class Main {
         }
     }
 
+    public char mainMenu() {
+        background.drawBackground("Main Menu", 500);
+        displayName();
+
+        icon.drawButton("HIGH SCORE", 440, 350, 400, 70, 40);
+        icon.drawButton("INSTRUCTIONS", 440, 430, 400, 70, 10);
+        icon.drawButton("PLAY", 440, 510, 400, 70, 140);
+        icon.drawButton("QUIT", 440, 590, 400, 70, 140);
+
+        c.setFont(PROMPT_FONT);
+        c.setColor(Color.WHITE);
+        c.drawString("Press <ENTER> to select", 510, 790);
+        c.setFont(SMALL_PROMPT);
+        c.drawString("Press 'S' to move the arrow down, Press 'W' to move the arrow up", 400, 750);
+
+        int curPos = 0;
+        char pressed;
+        do {
+            c.setColor(Color.BLACK);
+            c.fillRect(200, 300, 239, 410);
+            icon.drawArrow(370, 80 * curPos + 385);
+            pressed = c.getChar();
+
+            if (pressed == 'w') {
+                if (curPos > 0) {
+                    curPos--;
+                }
+            } else if (pressed == 's') {
+                if (curPos < 3) {
+                    curPos++;
+                }
+            } else if (pressed != '\n'){
+                new Message("Please press 'W', 'S', or <ENTER>");
+            }
+        } while (pressed != '\n');
+
+        switch (curPos) {
+            case 0:
+                return 'h';
+            case 1:
+                return 'i';
+            case 2:
+                return 's';
+            case 3:
+                return 'e';
+            default:
+                return 'u';
+        }
+    }
+
     public void play() {
         Game curGame = new Game(c);
         curGame.play();
@@ -331,7 +386,24 @@ public class Main {
         Main m = new Main();
         m.displayTitle();
         m.displaySplashScreen();
-        m.displayScores();
+        boolean toExit = false;
+        while (!toExit) {
+            char choice = m.mainMenu();
+            switch (choice) {
+                case 'e':
+                    toExit = true;
+                    break;
+                case 'h':
+                    m.displayScores();
+                    break;
+                case 's':
+                    m.play();
+                    break;
+                case 'i':
+                    m.displayInstructions();
+                    break;
+            }
+        }
         System.exit(0);
     }
 }

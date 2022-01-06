@@ -16,7 +16,7 @@ public class Background{
         fabric = new Color(200, 0, 0);
         topFabric = new Color(255, 0, 0);
 
-        titleFont = new Font("SansSerif", Font.BOLD, 80);
+        titleFont = new Font("SansSerif", Font.BOLD, 60);
     }
 
     public void drawCurtain(int percentDone){
@@ -40,9 +40,12 @@ public class Background{
 
     public void drawBackground(String title, int x){
         drawBackground(100);
-        c.setColor(Color.YELLOW);
+        c.setColor(Color.WHITE);
         c.setFont(titleFont);
-        c.drawString(title, x, 250);
+        if(!title.equals("")){
+            c.fillRect(300, 210, 680, 5);
+            c.drawString(title, x, 270);
+        }
     }
 
     public void drawBackground(){
