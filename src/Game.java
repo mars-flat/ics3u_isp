@@ -900,6 +900,9 @@ public class Game {
         finalRound = true;
         round();
 
+        // write the scores
+        writeScores();
+
         // display the winner
         displayWinner();
     } // play method
