@@ -12,6 +12,8 @@ import hsa.Message;
 import java.awt.*;
 import java.io.*;
 
+// TODO not enough character spaces for some phrases
+
 // Game class
 public class Game {
     private static final String PHRASE_PATH = "data/phrases.txt";
