@@ -697,12 +697,6 @@ public class Game {
             } // for loop for adding underscores (blanks) to curPhrase
         } // for loop for adding blanks to curPhrase
 
-        // TODO remove debugging
-        for(int i = 0; i < ansPhrase.length; i++){
-            System.out.print(ansPhrase[i] + " ");
-        }
-        System.out.println();
-
         // if it isn't the final round
         if(!finalRound){
             // initialize the wheel to a normal wheel
@@ -880,7 +874,6 @@ public class Game {
             pw.close();
         } catch(IOException e){
             c.print(e.getMessage());
-            //System.out.println(e.getMessage());
         } // try/catch for writing new scores
     } // writeScores method
 

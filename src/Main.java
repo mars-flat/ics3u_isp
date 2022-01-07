@@ -22,7 +22,7 @@ public class Main {
     private static final int LEADERBOARD_ENTRIES_PER_PAGE = 10;
 
     // fonts for various parts of the program
-    private static final Font TITLE_FONT = new Font("IMPACT", Font.BOLD, 100);
+    private static final Font TITLE_FONT = new Font("IMPACT", Font.PLAIN, 100);
     private static final Font SUBHEAD_FONT = new Font("SansSerif", Font.BOLD, 60);
     private static final Font SUBTITLE_FONT = new Font("Kristen ITC", Font.BOLD, 24);
     private static final Font HEADING_FONT = new Font("SansSerif", Font.BOLD, 20);
@@ -431,15 +431,42 @@ public class Main {
         curGame.play();
     } // play method
 
+    // run when the player exits
+    public void goodbye(){
+        // draw the background & the title
+        background.drawBackground();
+        displayName();
+        c.setFont(PROMPT_FONT);
+
+        // draw a thank you prompt for the user
+        c.setColor(Color.WHITE);
+        c.drawString("Thank you for playing Wheel of Fortune!", 200, 300);
+        c.drawString("Wheel of Fortune was developed by Shane Chen and Daniel Ye", 200, 400);
+        c.drawString("and Released on January 7, 2022.", 200, 450);
+        c.drawString("We hope you enjoyed playing this simulator as much as we did coding it!", 200, 550);
+
+        // wait for 2 seconds
+        pause(2000);
+    } // goodbye method
+
     public static void main(String[] args) throws IOException {
+        // initialize the main class
         Main m = new Main();
+
+        // display the title and splash screen
         m.displayTitle();
         m.displaySplashScreen();
+
+        // while we do not wish to exit yet
         boolean toExit = false;
         while (!toExit) {
+            // display the main method and get the user selected
             char choice = m.mainMenu();
+
+            // based on the choice, we either exit, display the scores, start a game, or display the instructions
             switch (choice) {
                 case 'e':
+                    m.goodbye();
                     toExit = true;
                     break;
                 case 'h':
@@ -451,8 +478,10 @@ public class Main {
                 case 'i':
                     m.displayInstructions();
                     break;
-            }
-        }
+            } // user choice switch statement
+        } // main while loop
+
+        // fully exit the program
         System.exit(0);
-    }
+    } // main method
 } // Main class
