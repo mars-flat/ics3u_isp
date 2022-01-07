@@ -11,7 +11,6 @@ import hsa.Console;
 import hsa.Message;
 import java.awt.*;
 import java.io.*;
-import java.nio.Buffer;
 
 // Game class
 public class Game {
