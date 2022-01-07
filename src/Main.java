@@ -1,3 +1,11 @@
+/*
+* Shane Chen & Daniel Ye
+* Ms. Basaraba
+* January 7
+* This is the Main class for the Wheel of Fortune simulation game, which interacts with all of the other classes and files in this directory.
+ */
+
+// imports
 import hsa.Console;
 import hsa.Message;
 
@@ -6,11 +14,14 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
+// Main class
 public class Main {
-    Console c;
+    Console c; // interface for drawing graphics and receiving input
 
+    // leaderboard entries for the high scores window
     private static final int LEADERBOARD_ENTRIES_PER_PAGE = 10;
 
+    // fonts for various parts of the program
     private static final Font TITLE_FONT = new Font("IMPACT", Font.BOLD, 100);
     private static final Font SUBHEAD_FONT = new Font("SansSerif", Font.BOLD, 60);
     private static final Font SUBTITLE_FONT = new Font("Kristen ITC", Font.BOLD, 24);
@@ -19,17 +30,18 @@ public class Main {
     private static final Font PROMPT_FONT = new Font("Serif", Font.PLAIN, 24);
     private static final Font SMALL_PROMPT = new Font("Serif", Font.PLAIN, 18);
 
+    // paths to various files
     private static final String SCORE_PATH = "data/scores.txt";
     private static final String INSTRUCTIONS_PATH = "data/instructions.txt";
-
-    IconDrawer icon;
 
     // stores lines of the instructions pages
     String[] instructions;
     LeaderboardEntry[] entries;
     private int entryCount;
 
+    // background generator & icon generators
     Background background;
+    IconDrawer icon;
 
     // constructor for the main class
     public Main() {
@@ -47,7 +59,7 @@ public class Main {
 
         // initialize the background
         background = new Background(c);
-    }
+    } // Main class constructor
 
     private void loadInstructions() throws IOException {
         BufferedReader br = new BufferedReader(new FileReader(INSTRUCTIONS_PATH));
@@ -61,7 +73,7 @@ public class Main {
         while ((ln = br.readLine()) != null) {
             instructions[ptr++] = ln;
         }
-    }
+    } // loadInstructions method
 
     // displays the game name
     private void displayName() {
@@ -124,7 +136,7 @@ public class Main {
                 }
             }
         }
-    }
+    } // displayInstructions method
 
     // returns a string array of length [length] with empty elements
     private String[] emptyStrings(int length) {
@@ -220,7 +232,7 @@ public class Main {
             entries[ptr++] = new LeaderboardEntry(name, score);
         }
         entryCount = ptr;
-    }
+    } // loadScores method
 
     private void sortScores() {
         while (true) {
@@ -250,7 +262,7 @@ public class Main {
             }
             if (sorted) return;
         }
-    }
+    } // sortScores method
 
     private void displayScores() throws IOException {
         // refresh the background
@@ -328,7 +340,7 @@ public class Main {
                 }
             }
         }
-    }
+    } // displayScores method
 
     // draws a subheading
     private void drawSubheading(String title, int x){
@@ -417,7 +429,7 @@ public class Main {
     public void play() {
         Game curGame = new Game(c);
         curGame.play();
-    }
+    } // play method
 
     public static void main(String[] args) throws IOException {
         Main m = new Main();
@@ -443,4 +455,4 @@ public class Main {
         }
         System.exit(0);
     }
-}
+} // Main class
