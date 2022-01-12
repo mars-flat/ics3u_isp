@@ -14,6 +14,7 @@ import java.io.*;
 
 // Game class
 public class Game {
+    // paths for various files
     private static final String PHRASE_PATH = "data/phrases.txt";
     private static final String WHEEL_PATH = "data/wheel.txt";
     private static final String FINAL_WHEEL_PATH = "data/final-wheel.txt";
