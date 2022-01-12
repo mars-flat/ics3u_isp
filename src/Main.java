@@ -374,9 +374,9 @@ public class Main {
         icon.drawButton("PLAY", 440, 490, 400, 70, 140);
         icon.drawButton("QUIT", 440, 570, 400, 70, 140);
         if(cheatOn){
-            icon.drawButton("CHEATS OFF", 440, 650, 400, 70, 140);
+            icon.drawButton("CHEATS OFF", 440, 650, 400, 70, 60);
         } else {
-            icon.drawButton("CHEATS ON", 440, 650, 400, 70, 140);
+            icon.drawButton("CHEATS ON", 440, 650, 400, 70, 60);
         }
 
         // prompt the user to press <ENTER> to select or use w/s to navigate the menu
@@ -395,7 +395,7 @@ public class Main {
             // draw the arrow at the current option (curPos)
             c.setColor(Color.BLACK);
             c.fillRect(200, 300, 239, 410);
-            icon.drawArrow(370, 80 * curPos + 385);
+            icon.drawArrow(370, 80 * curPos + 365);
 
             // get the user input
             pressed = c.getChar();
