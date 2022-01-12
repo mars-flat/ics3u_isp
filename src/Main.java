@@ -291,7 +291,7 @@ public class Main {
         while (true) {
             // clear previous listings
             c.setColor(Color.BLACK);
-            c.fillRect(340, 240, 600, 550);
+            c.fillRect(340, 230, 610, 550);
             c.setColor(Color.WHITE);
 
             // subtitle
