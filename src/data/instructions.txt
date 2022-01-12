@@ -8,7 +8,7 @@ phrase will be chosen, which is a noun, person, phrase, or place.
 
 The current player will spin the wheel. If it lands on “BANKRUPT”, the
 player loses all their money and loses their turn.
-If it lands on “LOSE A TURN”, the player loses their turn but
+If it lands on "LOSE A TURN", the player loses their turn but
 does not lose their money.
 
 If it lands on a dollar amount, they may guess 3 letters for the phrase.
@@ -23,7 +23,7 @@ After three rounds, the player with the most money will advance to the
 final round.
 
 In the final round, the player with the most money will spin the wheel ONCE.
-If it lands on “BANKRUPT”, the player must guess the phrase immediately.
+If it lands on "BANKRUPT", the player must guess the phrase immediately.
 
 If the phrase is guessed correctly, they will gain $100,000.
 Otherwise, the round ends with no rewards.
