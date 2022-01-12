@@ -277,7 +277,7 @@ public class Game {
         drawStats();
 
         // the amount of time to spin the wheel fast, then medium, then slow to simulate a wheel slowing down
-        int[] numTicks = {(int) (Math.random() * 75) + 100, (int) (Math.random() * 40) + 30, (int) (Math.random() * 50) + 50};
+        int[] numTicks = {(int) (Math.random() * 30) + 40, (int) (Math.random() * 40) + 30, (int) (Math.random() * 50) + 50};
         // the current angle the wheel is at
         int curAngle = 0;
         // spin the wheel for numTicks[0] frames, each time drawing the wheel and incrementing the angle by a lot
