@@ -264,9 +264,7 @@ public class Game {
         c.setColor(Color.WHITE);
         c.drawString(names[curPlayer] + ", Press <ENTER> to spin the wheel", 400, 795);
         // if they press anything other than <ENTER>, prompt them to press <ENTER>
-        while (c.getChar() != '\n') {
-            new Message("Please press the <ENTER> key to spin the wheel");
-        }
+        while (c.getChar() != '\n');
 
         // pause for 200 milliseconds, then spin the wheel
         pause(200);
