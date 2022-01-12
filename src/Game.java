@@ -39,8 +39,11 @@ public class Game {
     public static int MAX_NAME_LENGTH = 12; // the maximum length for a name
     public static final String ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; // the alphabet
 
+    // whether or not cheats are on
+    boolean cheatOn;
+
     // class constructor
-    public Game(Console con) {
+    public Game(Console con, boolean hasCheats) {
         // set the user interface (Console c)
         c = con;
 
@@ -52,6 +55,8 @@ public class Game {
         phraseFont = new Font("MonoSpaced", Font.BOLD, 80);
         letterFont = new Font("MonoSpaced", Font.BOLD, 40);
         money = new int[2];
+
+        cheatOn = hasCheats;
     }
 
     // get the names of the two players and returns an array with the names of the two players
@@ -682,6 +687,18 @@ public class Game {
         // calculate the phrase for the users to guess
         ansPhrase = phrases[(int) (Math.random() * phrases.length)];
 
+        // if cheats are on, tell the user what the phrase is
+        if(cheatOn){
+            // join each word together by spaces and put it in ansDisplay
+            String ansDisplay = "";
+            for(int i = 0; i < ansPhrase.length; i++){
+                ansDisplay += ansPhrase[i] + " ";
+            }
+
+            // tell the user the current phrase
+            new Message("The current phrase is: " + ansDisplay);
+        } // if statement for cheats
+
         // initialize the current phrase
         curPhrase = new String[ansPhrase.length];
         // for each word in ansPhrase
@@ -908,7 +925,7 @@ public class Game {
     public static void main(String[] args) {
         // 1280 x 800
         Console c = new Console(40, 160);
-        Game g = new Game(c);
+        Game g = new Game(c, true);
         g.play();
     } // testing main method
 } // Game class

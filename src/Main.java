@@ -43,6 +43,9 @@ public class Main {
     Background background;
     IconDrawer icon;
 
+    // whether or not cheat mode is on
+    boolean cheatOn;
+
     // constructor for the main class
     public Main() {
         c = new Console(40, 160);
@@ -59,6 +62,8 @@ public class Main {
 
         // initialize the background
         background = new Background(c);
+
+        cheatOn = false;
     } // Main class constructor
 
     private void loadInstructions() throws IOException {
@@ -364,10 +369,15 @@ public class Main {
         drawSubheading("Main Menu", 500);
 
         // draw 4 buttons, one for each option
-        icon.drawButton("LEADERBOARD", 440, 350, 400, 70, 8);
-        icon.drawButton("INSTRUCTIONS", 440, 430, 400, 70, 10);
-        icon.drawButton("PLAY", 440, 510, 400, 70, 140);
-        icon.drawButton("QUIT", 440, 590, 400, 70, 140);
+        icon.drawButton("LEADERBOARD", 440, 330, 400, 70, 8);
+        icon.drawButton("INSTRUCTIONS", 440, 410, 400, 70, 10);
+        icon.drawButton("PLAY", 440, 490, 400, 70, 140);
+        icon.drawButton("QUIT", 440, 570, 400, 70, 140);
+        if(cheatOn){
+            icon.drawButton("CHEATS OFF", 440, 650, 400, 70, 140);
+        } else {
+            icon.drawButton("CHEATS ON", 440, 650, 400, 70, 140);
+        }
 
         // prompt the user to press <ENTER> to select or use w/s to navigate the menu
         c.setFont(PROMPT_FONT);
@@ -397,7 +407,7 @@ public class Main {
                 } // if statement for moving the arrow up
             } else if (pressed == 's') {
                 // if it is 's', then try to move the arrow down
-                if (curPos < 3) {
+                if (curPos < 4) {
                     curPos++;
                 } // if statement for moving the arrow down
             } else if (pressed != '\n'){
@@ -420,6 +430,10 @@ public class Main {
             case 3:
                 // the fourth is "QUIT"
                 return 'e';
+            case 4:
+                // this option toggles cheat mode
+                cheatOn = !cheatOn;
+                return 'k';
             default:
                 // if none of the above options were used, then we return an arbitrary character (should never happen)
                 return 'u';
@@ -427,7 +441,7 @@ public class Main {
     } // mainMenu method
 
     public void play() {
-        Game curGame = new Game(c);
+        Game curGame = new Game(c, cheatOn);
         curGame.play();
     } // play method
 
@@ -477,6 +491,9 @@ public class Main {
                     break;
                 case 'i':
                     m.displayInstructions();
+                    break;
+                case 'k':
+                    // skips
                     break;
             } // user choice switch statement
         } // main while loop
