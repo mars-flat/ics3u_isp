@@ -59,6 +59,15 @@ public class Game {
         cheatOn = hasCheats;
     }
 
+    // clears the "keyboard buffer", so that a key entered in the past does not get registered
+    private void clearBuffer(){
+        // Console.isCharAvail: returns if there is a character available in the "keyboard buffer"
+        // while there is a character in the buffer, read it and remove the buffer
+        while(c.isCharAvail()){
+            c.getChar();
+        } // while loop for clearing the buffer
+    } // clearBuffer method
+
     // get the names of the two players and returns an array with the names of the two players
     private String[] getNames() {
         // initialize the player names
@@ -79,6 +88,7 @@ public class Game {
             char cur;
 
             // while they have not pressed enter
+            clearBuffer();
             while ((cur = c.getChar()) != '\n') {
                 // if they pressed backspace, remove a letter. Otherwise, add the letter they entered
                 if (cur == '\b') {
@@ -268,7 +278,10 @@ public class Game {
         c.setColor(Color.WHITE);
         c.drawString(names[curPlayer] + ", Press <ENTER> to spin the wheel", 400, 795);
         // if they press anything other than <ENTER>, prompt them to press <ENTER>
-        while (c.getChar() != '\n');
+        clearBuffer();
+        while (c.getChar() != '\n'){
+            new Message("Please press the <ENTER> key to spin the wheel");
+        }
 
         // pause for 200 milliseconds, then spin the wheel
         pause(200);
@@ -421,6 +434,7 @@ public class Game {
         // the current choice
         char choice;
         // while they have not pressed enter or they haven't chosen 3 letters yet
+        clearBuffer();
         while (((choice = c.getChar()) != '\n') || choosing < 3) {
             if (!((choice >= 'a' && choice <= 'z') || (choice >= 'A' && choice <= 'Z') || choice == '\b')) {
                 // if they didn't enter a letter, nor used the backspace, tell them to choose a letter
@@ -527,6 +541,7 @@ public class Game {
         // the entered character
         char ent;
         // while the entered character is not <ENTER>
+        clearBuffer();
         while ((ent = c.getChar()) != '\n') {
             // if the entered character is backspace
             if (ent == '\b') {
@@ -602,6 +617,7 @@ public class Game {
             c.setColor(Color.WHITE);
             c.setFont(smallPrompt);
             c.drawString("Press any key to continue", 400, 790);
+            clearBuffer();
             c.getChar();
 
             // give the current player [amtGain] dollars
@@ -782,6 +798,7 @@ public class Game {
                 c.setColor(Color.WHITE);
                 c.setFont(smallPrompt);
                 c.drawString("Press any key to continue", 400, 790);
+                clearBuffer();
                 c.getChar();
             } else {
                 // inform the user that their guess was incorrect, and prompt them to continue
@@ -792,6 +809,7 @@ public class Game {
                 c.drawString("Unfortunately, that is incorrect", 400, 700);
                 c.setFont(smallPrompt);
                 c.drawString("Press any key to continue", 400, 790);
+                clearBuffer();
                 c.getChar();
             } // if/else block for whether or not the user guessed the phrase
         } // if/else block for weather or not this is the final round
@@ -866,6 +884,7 @@ public class Game {
         wheelAnimate.start();
 
         // wait for input
+        clearBuffer();
         c.getChar();
 
         // stop the wheel and wait for the thread to die before continuing

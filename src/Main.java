@@ -80,6 +80,15 @@ public class Main {
         }
     } // loadInstructions method
 
+    // clears the "keyboard buffer", so that a key entered in the past does not get registered
+    private void clearBuffer(){
+        // Console.isCharAvail: returns if there is a character available in the "keyboard buffer"
+        // while there is a character in the buffer, read it and remove the buffer
+        while(c.isCharAvail()){
+            c.getChar();
+        } // while loop for clearing the buffer
+    } // clearBuffer method
+
     // displays the game name
     private void displayName() {
         // draw "WHEEL OF FORTUNE" at the top
@@ -125,6 +134,7 @@ public class Main {
 
             // get user input
             while (true) {
+                clearBuffer();
                 char input = c.getChar();
                 if (input == 10) { // leave instructions
                     return;
@@ -176,6 +186,7 @@ public class Main {
         c.setFont(PROMPT_FONT);
         c.setColor(Color.WHITE);
         c.drawString("Press <ENTER> to select", 510, 790);
+        clearBuffer();
         while (c.getChar() != '\n') {
             new Message("Please press <ENTER>");
         }
@@ -332,6 +343,7 @@ public class Main {
             }
 
             // handle user input
+            clearBuffer();
             char pressed = c.getChar();
             if (pressed == 10) { // leave screen
                 return;
@@ -398,6 +410,7 @@ public class Main {
             icon.drawArrow(370, 80 * curPos + 365);
 
             // get the user input
+            clearBuffer();
             pressed = c.getChar();
 
             if (pressed == 'w') {
