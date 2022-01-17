@@ -5,15 +5,15 @@ with the most money at the end of these rounds will advance to the final round.
 
 Each normal round will start with both players having $0. A random
 phrase will be chosen, which is a noun, person, phrase, or place.
+An example of a phrase is: "A PIECE OF CAKE". Note that phrases will
+only contain uppercase characters and spaces.
 
-The current player will spin the wheel. If it lands on "BANKRUPT", the
+The current player will spin the wheel. If it lands on "BROKE", the
 player loses all their money and loses their turn.
-If it lands on "LOSE A TURN", the player loses their turn but
-does not lose their money.
 
 If it lands on a dollar amount, they may guess 3 letters for the phrase.
 All letters of the phrase that are the guessed letters will be uncovered. Each
-uncovered letter will give the player [AMT] * [LETTERS UNCOVERED] dollars.
+uncovered letter will give the player [AMOUNT] * [UNCOVERED] dollars.
 
 The current player can then guess the phrase. If they guess correctly,
 the round ends and the player will gain $20,000.
@@ -23,18 +23,19 @@ After three rounds, the player with the most money will advance to the
 final round.
 
 In the final round, the player with the most money will spin the wheel ONCE.
-If it lands on "BANKRUPT", the player must guess the phrase immediately.
+If it lands on "BROKE", the player must guess the phrase immediately.
 
-If the phrase is guessed correctly, they will gain $1,000,000.
+If the phrase is guessed correctly, they will gain $20,000.
 Otherwise, the round ends with no rewards.
 
-If it lands on a numerical value, the player will gain ten times the
-amount landed on.
+During this round, each of the wheel values will be multiplied by ten.
+This means for each letter guessed, the player will gain 10x the money.
 
 At the end of the finals, both players will have their score entered into
 a scoreboard. The final winner is whoever has the most money.
 
 This is the end of the instructions. Good luck!
+
 
 
 
