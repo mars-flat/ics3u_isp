@@ -530,10 +530,11 @@ public class Game {
         c.setFont(promptFont);
         c.setColor(Color.WHITE);
         c.drawString(line, 250, 700);
+        c.drawString("Uncovered: " + uncovered, 120, 790);
 
         // inform the user to use <ENTER> to submit the phrase
         c.setFont(smallPrompt);
-        c.drawString("Press <ENTER> to submit", 500, 790);
+        c.drawString("Press <ENTER> to submit", 900, 790);
 
         // continually the text console for what the user entered
         c.setFont(promptFont);
@@ -641,23 +642,23 @@ public class Game {
                 // draw the prompt, informing the users that their guess is correct
                 c.setColor(Color.WHITE);
                 c.setFont(promptFont);
-                c.drawString("Correct! " + names[curPlayer] + " gains $20000!", 250, 700);
+                c.drawString("Correct! " + names[curPlayer] + " gains $20000!", 400, 700);
 
                 // prompt the user to continue & return true
                 c.setFont(smallPrompt);
-                c.drawString("Press any key to continue", 400, 790);
+                c.drawString("Press any key to continue", 560, 790);
                 c.getChar();
             } else {
                 // redraw the bottom part of the screen
                 c.setColor(Color.BLACK);
-                c.fillRect(200, 670, 950, 120);
+                c.fillRect(120, 670, 1040, 120);
 
                 // informt he user that their guess was incorrect
                 c.setColor(Color.WHITE);
                 c.setFont(promptFont);
-                c.drawString("Unfortunately, that is incorrect", 400, 700);
+                c.drawString("Unfortunately, that is incorrect", 480, 700);
                 c.setFont(smallPrompt);
-                c.drawString("Press any key to continue", 400, 790);
+                c.drawString("Press any key to continue", 560, 790);
                 c.getChar();
             } // if/else block for whether or not the user guessed the phrase
         } // if/else for whether or not the spinner landed on "broke"
@@ -680,7 +681,7 @@ public class Game {
         if(!finalRound){
             // if it is not the final round, simply display "Round [current round]"
             roundDisplay = "Round " + (curRound + 1);
-            displayX = 300;
+            displayX = 250;
         } else {
             // if it is the final round, display "Final Round"
             roundDisplay = "Final Round";
