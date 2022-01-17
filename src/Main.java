@@ -377,7 +377,7 @@ public class Main {
                 c.setColor(Color.BLACK);
                 c.fillRect(160,300,200,300);
 
-                // reset and resort the scores currently held in variables
+                // this is done if the user cancels
                 loadScores();
                 sortScores();
             }
