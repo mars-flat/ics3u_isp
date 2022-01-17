@@ -10,10 +10,7 @@ import hsa.Console;
 import hsa.Message;
 
 import java.awt.*;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-
+import java.io.*;
 // Main class
 public class Main {
     Console c; // interface for drawing graphics and receiving input
@@ -344,6 +341,10 @@ public class Main {
                 c.drawString("<E> next page", 790, 720);
             }
 
+            c.setColor(Color.RED);
+            if (entryCount > 0) c.drawString("<P> reset scores", 180, 330);
+
+
             // handle user input
             clearBuffer();
             char pressed = c.getChar();
@@ -357,8 +358,31 @@ public class Main {
                 if (currentPage > 1) {
                     currentPage--;
                 }
-            } else {
-                new Message("Press E, Q, or <ENTER>");
+            } else if (pressed == 'p' || pressed == 'P') { // reset scores
+                // warning
+                c.drawString("Are you sure?", 170, 360);
+                c.drawString("This cannot be undone.", 170, 380);
+                c.drawString("Press P again to confirm", 170, 410);
+                c.drawString("or any key to cancel", 170, 430);
+
+                // get user confirmation
+                char p = c.getChar();
+                if (p == 'p' || p == 'P') {
+                    BufferedWriter bw = new BufferedWriter(new FileWriter(SCORE_PATH));
+                    bw.write("");
+                    bw.close();
+                }
+
+                // clear warning
+                c.setColor(Color.BLACK);
+                c.fillRect(160,300,200,300);
+
+                // reset and resort the scores currently held in variables
+                loadScores();
+                sortScores();
+            }
+            else {
+                new Message("Press E, Q, P, or <ENTER>");
             }
         }
     } // displayScores method
