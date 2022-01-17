@@ -6,7 +6,7 @@ with the most money at the end of these rounds will advance to the final round.
 Each normal round will start with both players having $0. A random
 phrase will be chosen, which is a noun, person, phrase, or place.
 
-The current player will spin the wheel. If it lands on “BANKRUPT”, the
+The current player will spin the wheel. If it lands on "BANKRUPT", the
 player loses all their money and loses their turn.
 If it lands on "LOSE A TURN", the player loses their turn but
 does not lose their money.
@@ -25,7 +25,7 @@ final round.
 In the final round, the player with the most money will spin the wheel ONCE.
 If it lands on "BANKRUPT", the player must guess the phrase immediately.
 
-If the phrase is guessed correctly, they will gain $100,000.
+If the phrase is guessed correctly, they will gain $1,000,000.
 Otherwise, the round ends with no rewards.
 
 If it lands on a numerical value, the player will gain ten times the

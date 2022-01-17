@@ -114,7 +114,9 @@ public class Game {
                 c.fillRect(120, 350, 1040, 200);
                 c.setFont(nameFont);
                 c.setColor(Color.WHITE);
-                c.drawString(playerNames[i], 130, 500);
+                if(playerNames[i].length() > 0){
+                    c.drawString(playerNames[i], 130, 500);
+                }
             } // while they have not entered <ENTER>
 
             if (playerNames[i].equals("")) {
