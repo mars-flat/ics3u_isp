@@ -27,6 +27,7 @@ public class Game {
     String[][] phrases; // all of the phrases, where each element is a name
     String[] wheelParts; // strings to display on the wheel
     String[] finalWheelParts; // strings to display on the final wheel
+    boolean[] chosen; // whether or not the current phrase has been chosen
     Wheel curWheel; // the current wheel
 
     int curRound, curPlayer; // the current round, the player whose turn it is right now
@@ -180,6 +181,7 @@ public class Game {
             // the current line
             String line;
             phrases = new String[numLines][];
+            chosen = new boolean[numLines];
 
             // initialize a bufferedReader for reading the actual lines
             BufferedReader br = new BufferedReader(new FileReader(PHRASE_PATH));
@@ -704,7 +706,14 @@ public class Game {
         pause(1000);
 
         // calculate the phrase for the users to guess
-        ansPhrase = phrases[(int) (Math.random() * phrases.length)];
+        int toChoose; // the index of the phrase to choose
+
+        // while the current phrase has been chosen, choose another phrase
+        do{
+            toChoose = (int) (Math.random() * phrases.length);
+        } while (chosen[toChoose]);
+        ansPhrase = phrases[toChoose];
+        chosen[toChoose] = true;
 
         // if cheats are on, tell the user what the phrase is
         if(cheatOn){
