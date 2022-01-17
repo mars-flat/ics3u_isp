@@ -148,6 +148,8 @@ public class Main {
                         currentPage++;
                     }
                     break;
+                } else {
+                    new Message("Press E, Q, or <ENTER>");
                 }
             }
         }
@@ -355,6 +357,8 @@ public class Main {
                 if (currentPage > 1) {
                     currentPage--;
                 }
+            } else {
+                new Message("Press E, Q, or <ENTER>");
             }
         }
     } // displayScores method
