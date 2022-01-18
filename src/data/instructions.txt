@@ -23,13 +23,12 @@ After three rounds, the player with the most money will advance to the
 final round.
 
 In the final round, the player with the most money will spin the wheel ONCE.
-If it lands on "BROKE", the player must guess the phrase immediately.
 
-If the phrase is guessed correctly, they will gain $20,000.
-Otherwise, the round ends with no rewards.
+The wheel will have all values multiplied by 100, and the "BROKE" segment will
+be replaced by "WINNER", worth $1,000,000.
 
-During this round, each of the wheel values will be multiplied by ten.
-This means for each letter guessed, the player will gain 10x the money.
+The player will be able to guess the phrase of this round. If they guess
+correctly, they will gain the amount spun. Otherwise, they will not gain anything.
 
 At the end of the finals, both players will have their score entered into
 a scoreboard. The final winner is whoever has the most money.
