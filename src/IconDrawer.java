@@ -18,7 +18,7 @@ public class IconDrawer {
     public IconDrawer(Console con){
         // initialize instance variables
         c = con;
-        buttonFont = new Font("SansSerif", Font.BOLD, 50);
+        buttonFont = new Font("SansSerif", Font.BOLD, 40);
     } // IconDrawer class constructor
 
     // draws an arrow
@@ -46,7 +46,7 @@ public class IconDrawer {
         // draw the message
         c.setFont(buttonFont);
         c.setColor(Color.BLACK);
-        c.drawString(message, x + leftMargin, y + height - (height - 40) / 2);
+        c.drawString(message, x + leftMargin, y + height - (height - 30) / 2);
     } // drawButton method
 
     // -------------------------------------------- TESTING ----------------------------------

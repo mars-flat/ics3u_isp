@@ -22,13 +22,13 @@ public class Main {
     private static final int LEADERBOARD_ENTRIES_PER_PAGE = 10;
 
     // fonts for various parts of the program
-    private static final Font TITLE_FONT = new Font("IMPACT", Font.PLAIN, 100);
-    private static final Font SUBHEAD_FONT = new Font("SansSerif", Font.BOLD, 60);
-    private static final Font SUBTITLE_FONT = new Font("Kristen ITC", Font.BOLD, 24);
-    private static final Font HEADING_FONT = new Font("SansSerif", Font.BOLD, 20);
-    private static final Font PARAGRAPH_FONT = new Font("SansSerif", Font.PLAIN, 14);
-    private static final Font PROMPT_FONT = new Font("Serif", Font.PLAIN, 24);
-    private static final Font SMALL_PROMPT = new Font("Serif", Font.PLAIN, 18);
+    private static final Font TITLE_FONT = new Font("IMPACT", Font.PLAIN, 80);
+    private static final Font SUBHEAD_FONT = new Font("SansSerif", Font.BOLD, 48);
+    private static final Font SUBTITLE_FONT = new Font("Kristen ITC", Font.BOLD, 19);
+    private static final Font HEADING_FONT = new Font("SansSerif", Font.BOLD, 16);
+    private static final Font PARAGRAPH_FONT = new Font("SansSerif", Font.PLAIN, 11);
+    private static final Font PROMPT_FONT = new Font("Serif", Font.PLAIN, 19);
+    private static final Font SMALL_PROMPT = new Font("Serif", Font.PLAIN, 14);
 
     // paths to various files
     private static final String SCORE_PATH = "data/scores.txt";
@@ -48,7 +48,7 @@ public class Main {
 
     // constructor for the main class
     public Main() {
-        c = new Console(40, 160);
+        c = new Console(32, 128);
         // load data on object initialization (this pattern can be changed)
         try {
             loadInstructions();
@@ -94,7 +94,7 @@ public class Main {
         // draw "WHEEL OF FORTUNE" at the top
         c.setColor(Color.YELLOW);
         c.setFont(TITLE_FONT);
-        c.drawString("WHEEL OF FORTUNE", 260, 200);
+        c.drawString("WHEEL OF FORTUNE", 208, 160);
     } // displayName method
 
     // displays the instructions for the game
@@ -110,26 +110,26 @@ public class Main {
         while (true) {
             // clear previously displayed instructions
             c.setColor(Color.BLACK);
-            c.fillRect(300, 200, 700, 600);
+            c.fillRect(240, 160, 560, 480);
             c.setColor(Color.WHITE);
 
             // display the instruction page
             c.setFont(SUBTITLE_FONT);
-            c.drawString("Instructions - Page " + currentPage, 510, 290);
+            c.drawString("Instructions - Page " + currentPage, 408, 232);
 
             // display instruction content
             c.setFont(PARAGRAPH_FONT);
-            for (int i = (currentPage - 1) * linesPerPage, lineY = 360; i < (currentPage * linesPerPage); ++i, lineY += 25) {
-                c.drawString(instructions[i], 410, lineY);
+            for (int i = (currentPage - 1) * linesPerPage, lineY = 290; i < (currentPage * linesPerPage); ++i, lineY += 20) {
+                c.drawString(instructions[i], 330, lineY);
             }
 
             // display controls
             if (currentPage != 1) {
-                c.drawString("<Q> previous page", 400, 680);
+                c.drawString("<Q> previous page", 320, 540);
             }
-            c.drawString("<ENTER> main menu", 580, 680);
+            c.drawString("<ENTER> main menu", 460, 540);
             if (currentPage != 4) {
-                c.drawString("<E> next page", 780, 680);
+                c.drawString("<E> next page", 620, 540);
             }
 
             // get user input
@@ -176,18 +176,18 @@ public class Main {
         displayName();
 
         // draw the option to begin
-        icon.drawButton("START", 490, 670, 300, 60, 60);
-        icon.drawArrow(420, 700);
+        icon.drawButton("START", 390, 540, 240, 48, 48);
+        icon.drawArrow(340, 560);
 
         // start a thread for the spinning wheel
-        Wheel spinning = new Wheel(640, 430, 200, emptyStrings(10), c);
+        Wheel spinning = new Wheel(510, 340, 160, emptyStrings(10), c);
         Thread t = new Thread(spinning);
         t.start();
 
         // prompt and wait for the user to continue
         c.setFont(PROMPT_FONT);
         c.setColor(Color.WHITE);
-        c.drawString("Press <ENTER> to select", 510, 790);
+        c.drawString("Press <ENTER> to select", 410, 630);
         clearBuffer();
         while (c.getChar() != '\n') {
             new Message("Please press <ENTER>");
@@ -217,7 +217,7 @@ public class Main {
     // animates the splash screen
     public void displaySplashScreen() {
         // displays the splash screen
-        Wheel middle = new Wheel(640, 400, 200, emptyStrings(10), c);
+        Wheel middle = new Wheel(510, 320, 160, emptyStrings(10), c);
 
         // animate the background coming in through a for loop
         for (int i = 0; i <= 100; i += 5) {
@@ -304,44 +304,44 @@ public class Main {
         while (true) {
             // clear previous listings
             c.setColor(Color.BLACK);
-            c.fillRect(340, 230, 610, 550);
+            c.fillRect(272, 180, 490, 440);
             c.setColor(Color.WHITE);
 
             // subtitle
             c.setFont(SUBTITLE_FONT);
-            c.drawString("Leaderboard - Page " + currentPage, 510, 250);
+            c.drawString("Leaderboard - Page " + currentPage, 410, 200);
 
             c.setColor(Color.GREEN);
 
             // borders
-            c.drawLine(400, 300, 880, 300);
-            c.drawLine(400, 340, 880, 340);
-            c.drawLine(640, 290, 640, 660);
+            c.drawLine(320, 240, 700, 240);
+            c.drawLine(320, 272, 700, 272);
+            c.drawLine(510, 230, 510, 530);
 
             // column heading
             c.setFont(HEADING_FONT);
-            c.drawString("PLAYER", 420, 330);
-            c.drawString("SCORE", 660, 330);
+            c.drawString("PLAYER", 340, 260);
+            c.drawString("SCORE", 528, 264);
 
             // entries
             c.setFont(PARAGRAPH_FONT);
-            int yCoordinate = 370;
+            int yCoordinate = 300;
             for (int index = (currentPage - 1) * LEADERBOARD_ENTRIES_PER_PAGE;
                  index < Math.min((currentPage - 1) * LEADERBOARD_ENTRIES_PER_PAGE + LEADERBOARD_ENTRIES_PER_PAGE, entryCount);
                  ++index) {
-                c.drawString((index + 1) + ". " + entries[index].entryName, 420, yCoordinate);
-                c.drawString("" + entries[index].score, 660, yCoordinate);
-                yCoordinate += 30;
+                c.drawString((index + 1) + ". " + entries[index].entryName, 335, yCoordinate);
+                c.drawString("" + entries[index].score, 530, yCoordinate);
+                yCoordinate += 24;
             }
 
             // controls
             // display controls
             if (currentPage > 1) {
-                c.drawString("<Q> previous page", 400, 720);
+                c.drawString("<Q> previous page", 320, 580);
             }
-            c.drawString("<ENTER> main menu", 570, 720);
+            c.drawString("<ENTER> main menu", 460, 575);
             if (currentPage < pages) {
-                c.drawString("<E> next page", 790, 720);
+                c.drawString("<E> next page", 630, 575);
             }
 
             // handle user input
@@ -370,10 +370,10 @@ public class Main {
         c.setFont(SUBHEAD_FONT);
 
         // fill a line above the subheading
-        c.fillRect(300, 210, 680, 5);
+        c.fillRect(240, 170, 545, 5);
 
         // draw the subheading
-        c.drawString(title, x, 270);
+        c.drawString(title, x, 215);
     } // subHeading method
 
     // displays the main menu and returns what the user selected upon pressing <ENTER>
@@ -382,25 +382,25 @@ public class Main {
         background.drawBackground();
         // display the game name
         displayName();
-        drawSubheading("Main Menu", 500);
+        drawSubheading("Main Menu", 400);
 
         // draw 4 buttons, one for each option
-        icon.drawButton("LEADERBOARD", 440, 330, 400, 70, 8);
-        icon.drawButton("INSTRUCTIONS", 440, 410, 400, 70, 10);
-        icon.drawButton("PLAY", 440, 490, 400, 70, 140);
-        icon.drawButton("QUIT", 440, 570, 400, 70, 140);
+        icon.drawButton("LEADERBOARD", 350, 265, 320, 56, 6);
+        icon.drawButton("INSTRUCTIONS", 350, 330, 320, 56, 8);
+        icon.drawButton("PLAY", 350, 392, 320, 56, 110);
+        icon.drawButton("QUIT", 350, 455, 320, 56, 110);
         if(cheatOn){
-            icon.drawButton("CHEATS OFF", 440, 650, 400, 70, 60);
+            icon.drawButton("CHEATS OFF", 350, 520, 320, 56, 50);
         } else {
-            icon.drawButton("CHEATS ON", 440, 650, 400, 70, 60);
+            icon.drawButton("CHEATS ON", 350, 520, 320, 56, 50);
         }
 
         // prompt the user to press <ENTER> to select or use w/s to navigate the menu
         c.setFont(PROMPT_FONT);
         c.setColor(Color.WHITE);
-        c.drawString("Press <ENTER> to select", 510, 790);
+        c.drawString("Press <ENTER> to select", 410, 630);
         c.setFont(SMALL_PROMPT);
-        c.drawString("Press 'S' to move the arrow down, Press 'W' to move the arrow up", 400, 750);
+        c.drawString("Press 'S' to move the arrow down, Press 'W' to move the arrow up", 320, 600);
 
         // the current position of the arrow
         int curPos = 0;
@@ -410,8 +410,8 @@ public class Main {
         do {
             // draw the arrow at the current option (curPos)
             c.setColor(Color.BLACK);
-            c.fillRect(200, 300, 239, 410);
-            icon.drawArrow(370, 80 * curPos + 365);
+            c.fillRect(160, 240, 190, 330);
+            icon.drawArrow(295, 64 * curPos + 290);
 
             // get the user input
             clearBuffer();
@@ -471,10 +471,10 @@ public class Main {
 
         // draw a thank you prompt for the user
         c.setColor(Color.WHITE);
-        c.drawString("Thank you for playing Wheel of Fortune!", 200, 300);
-        c.drawString("Wheel of Fortune was developed by Shane Chen and Daniel Ye", 200, 400);
-        c.drawString("and Released on January 7, 2022.", 200, 450);
-        c.drawString("We hope you enjoyed playing this simulator as much as we did coding it!", 200, 550);
+        c.drawString("Thank you for playing Wheel of Fortune!", 160, 240);
+        c.drawString("Wheel of Fortune was developed by Shane Chen and Daniel Ye", 160, 320);
+        c.drawString("and Released on January 7, 2022.", 160, 360);
+        c.drawString("We hope you enjoyed playing this simulator as much as we did coding it!", 160, 440);
 
         // wait for 2 seconds
         pause(2000);
