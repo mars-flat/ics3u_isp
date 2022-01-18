@@ -39,8 +39,8 @@ public class Background{
 
         // draw the side curtains
         c.setColor(fabric);
-        c.fillRect(0, 0, percentDone, c.getHeight());
-        c.fillRect(c.getWidth() - percentDone, 0, percentDone, c.getHeight());
+        c.fillRect(0, 0, (int) (percentDone * 0.8), c.getHeight());
+        c.fillRect(c.getWidth() - (int) (percentDone * 0.8), 0, percentDone, c.getHeight());
 
         // draw the circles at the top
         c.setColor(topFabric);
@@ -68,7 +68,7 @@ public class Background{
         // draw an extra title
         c.setColor(Color.YELLOW);
         c.setFont(titleFont);
-        c.drawString(title, x, 250);
+        c.drawString(title, x, 200);
     } // drawBackground method
 
     // draws a completed background
@@ -76,18 +76,4 @@ public class Background{
         // draw the background
         drawBackground("", 0);
     } // drawBackground method
-
-    // ---------------------------------- TESTING ----------------------------
-    public static void main(String[] args){
-        Console c = new Console();
-        Background b = new Background(c);
-        for(int i = 0; i <= 100; i += 5){
-            try{
-                b.drawBackground(i);
-                Thread.sleep(50);
-            } catch (InterruptedException e){
-                c.print(e.getMessage());
-            }
-        }
-    }
 } // Background class

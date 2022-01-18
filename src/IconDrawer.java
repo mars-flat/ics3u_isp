@@ -49,14 +49,4 @@ public class IconDrawer {
         c.drawString(message, x + leftMargin, y + height - (height - 30) / 2);
     } // drawButton method
 
-    // -------------------------------------------- TESTING ----------------------------------
-    public static void main(String[] args){
-        Console c = new Console();
-        IconDrawer d = new IconDrawer(c);
-        c.setColor(Color.BLACK);
-        c.fillRect(0, 0, 640, 500);
-        d.drawArrow(100, 100);
-
-        d.drawButton("Hello", 300, 300, 200, 50, 30);
-    }
 } // IconDrawer class

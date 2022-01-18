@@ -50,11 +50,11 @@ public class Game {
 
         // initialize the background, various fonts, and the amount of money the players have
         background = new Background(c);
-        promptFont = new Font("SansSerif", Font.PLAIN, 24);
-        smallPrompt = new Font("Serif", Font.PLAIN, 14);
-        nameFont = new Font("MonoSpaced", Font.BOLD, 140);
-        phraseFont = new Font("MonoSpaced", Font.BOLD, 80);
-        letterFont = new Font("MonoSpaced", Font.BOLD, 40);
+        promptFont = new Font("SansSerif", Font.PLAIN, 19);
+        smallPrompt = new Font("Serif", Font.PLAIN, 11);
+        nameFont = new Font("MonoSpaced", Font.BOLD, 112);
+        phraseFont = new Font("MonoSpaced", Font.BOLD, 64);
+        letterFont = new Font("MonoSpaced", Font.BOLD, 32);
         money = new int[2];
 
         cheatOn = hasCheats;
@@ -77,13 +77,13 @@ public class Game {
         // repeat getting the name for both players
         for (int i = 0; i < 2; i++) {
             // draw a background with "GAME START"
-            background.drawBackground("GAME START", 340);
+            background.drawBackground("GAME START", 270);
 
             // prompt the i-th player to enter their name
             c.setColor(Color.WHITE);
             c.setFont(promptFont);
-            c.drawString("Player " + (i + 1) + ", please enter your name: ", 410, 300);
-            c.drawString("Press <ENTER> to submit", 430, 780);
+            c.drawString("Player " + (i + 1) + ", please enter your name: ", 330, 240);
+            c.drawString("Press <ENTER> to submit", 345, 625);
 
             // the current character
             char cur;
@@ -112,11 +112,11 @@ public class Game {
 
                 // redraw the current name
                 c.setColor(Color.BLACK);
-                c.fillRect(120, 350, 1040, 200);
+                c.fillRect(105, 280, 820, 160);
                 c.setFont(nameFont);
                 c.setColor(Color.WHITE);
                 if(playerNames[i].length() > 0){
-                    c.drawString(playerNames[i], 130, 500);
+                    c.drawString(playerNames[i], 110, 400);
                 }
             } // while they have not entered <ENTER>
 
@@ -205,12 +205,12 @@ public class Game {
         c.setFont(promptFont);
 
         // display the first player & the amount of money they have
-        c.drawString(names[0], 120, 120);
-        c.drawString("$" + money[0], 120, 160);
+        c.drawString(names[0], 105, 95);
+        c.drawString("$" + money[0], 105, 130);
 
         // display the second player & the amount of money they have
-        c.drawString(names[1], 950, 120);
-        c.drawString("$" + money[1], 950, 160);
+        c.drawString(names[1], 760, 95);
+        c.drawString("$" + money[1], 760, 130);
     } // drawStats method
 
     // loads the phrases for te wheel
@@ -268,19 +268,19 @@ public class Game {
 
         // draw circle for the <ENTER> icon at the center of the wheel
         c.setColor(new Color(0, 0, 150));
-        c.fillOval(640 - 50, 450 - 50, 100, 100);
+        c.fillOval(470, 320, 80, 80);
 
         // use a white colour in the normal prompt font
         c.setColor(Color.WHITE);
         c.setFont(promptFont);
 
         // draw the <ENTER> word in the icon at the center of the wheel
-        c.drawString("ENTER", 605, 460);
+        c.drawString("ENTER", 477, 368);
 
         // in a small font, get the user to press <ENTER> to spin the wheel
         c.setFont(smallPrompt);
         c.setColor(Color.WHITE);
-        c.drawString(names[curPlayer] + ", Press <ENTER> to spin the wheel", 400, 795);
+        c.drawString(names[curPlayer] + ", Press <ENTER> to spin the wheel", 400, 635);
         // if they press anything other than <ENTER>, prompt them to press <ENTER>
         clearBuffer();
         while (c.getChar() != '\n'){
@@ -330,18 +330,18 @@ public class Game {
         // redraw the background & set the font to a large Serif font
         background.drawBackground();
         drawStats();
-        c.setFont(new Font("Serif", Font.BOLD, 200));
+        c.setFont(new Font("Serif", Font.BOLD, 160));
 
         // have the phrase telling the user what result they got flash 4 times
         for (int i = 0; i < 4; i++) {
             // erase the phrase and pause
             c.setColor(Color.BLACK);
-            c.fillRect(390, 300, 700, 250);
+            c.fillRect(310, 240, 560, 200);
             pause(300);
 
             // draw the phrase in a big yellow font, then pause
             c.setColor(Color.YELLOW);
-            c.drawString(result, 400, 500);
+            c.drawString(result, 320, 400);
             pause(300);
         } // for loop for flashing the phrase
 
@@ -352,15 +352,15 @@ public class Game {
     // draws the blanks and uncovered parts of the phrase - white rectangles if it has not been uncovered and blue rectangles if it has
     private void drawBlanks(String[] words) {
         // the rows in which we can display phrase
-        int[] row = {400, 500, 600, 700, 800};
+        int[] row = {320, 400, 480, 560, 640};
         // the number of characters to display per row
         int numPerRow = 12;
         // the resulting width of each character
-        int width = 900 / numPerRow;
+        int width = 720 / numPerRow;
         // the increments in which to display the character - this adds a margin between each character
         int margin = width + 5;
         // the height of rectangle
-        int height = 90;
+        int height = 70;
         // the current row and column to display the character
         int curRow = 0;
         int curCol = 0;
@@ -379,13 +379,13 @@ public class Game {
                 if (words[i].charAt(let) == '_') {
                     // if it is a blank, then draw a white rounded rectangle in its place
                     c.setColor(Color.WHITE);
-                    c.fillRoundRect(curCol * margin + 110, row[curRow] - height, width, height, 20, 20);
+                    c.fillRoundRect(curCol * margin + 88, row[curRow] - height, width, height, 20, 20);
                 } else {
                     // if it is not a blank, draw a cyan rectangle along with the current letter
                     c.setColor(Color.CYAN);
-                    c.fillRoundRect(curCol * margin + 110, row[curRow] - height, width, height, 20, 20);
+                    c.fillRoundRect(curCol * margin + 88, row[curRow] - height, width, height, 20, 20);
                     c.setColor(Color.BLACK);
-                    c.drawString(words[i].substring(let, let + 1), curCol * margin + 130, row[curRow] - height / 4);
+                    c.drawString(words[i].substring(let, let + 1), curCol * margin + 105, row[curRow] - height / 4);
                 } // if/else for if the current letter is a blank
 
                 // go to the next position for the next character
@@ -416,7 +416,7 @@ public class Game {
     // uncovers the phrase one letter at a time, returning the number of letters that were uncovered
     private int uncoverPhrases() {
         // draw the background & the statistics
-        background.drawBackground("LETTER GUESSING", 220);
+        background.drawBackground("LETTER GUESSING", 175);
         drawStats();
 
         // draw the blanks for the current phrase
@@ -425,11 +425,11 @@ public class Game {
         // prompt the user in a white font to choose 3 letters to uncover
         c.setFont(promptFont);
         c.setColor(Color.WHITE);
-        c.drawString("Choose 3 letters to uncover, then press <ENTER>", 350, 700);
+        c.drawString("Choose 3 letters to uncover, then press <ENTER>", 280, 560);
 
         // sort the currently uncovered phrases and display it to the user
         sortUncovered();
-        c.drawString("Uncovered: " + uncovered, 120, 780);
+        c.drawString("Uncovered: " + uncovered, 95, 625);
 
         // array of the 3 uncovered letters
         char[] toUncover = new char[3];
@@ -461,19 +461,19 @@ public class Game {
 
             // clear the bottom right of the screen
             c.setColor(Color.BLACK);
-            c.fillRect(1000, 750, 140, 50);
+            c.fillRect(800, 600, 110, 40);
 
             // sets the color to white
             c.setColor(Color.WHITE);
 
             // display the letters that the user has chosen so far
-            int curX = 1100; // the current x coordinate to display the letter at
+            int curX = 880; // the current x coordinate to display the letter at
             // for each of the letters the user has chosen - iterate from the last to first letter as we write from right to left
             for (int i = choosing - 1; i >= 0; i--) {
                 // display the current letter
-                c.drawString("" + toUncover[i], curX, 790);
+                c.drawString("" + toUncover[i], curX, 630);
                 // update the x coordinate to display the letter at
-                curX -= 20;
+                curX -= 16;
             } // for loop for displaying each letter
         } // while loop for getting 3 letters from the user
 
@@ -521,7 +521,7 @@ public class Game {
     // prompts the user to guess the phrases - returns whether or not the guessed phrase is correct
     private boolean guessPhrase() {
         // draw the background && player statistics
-        background.drawBackground("WHEEL OF FORTUNE", 200);
+        background.drawBackground("WHEEL OF FORTUNE", 160);
         drawStats();
 
         // draw the blanks for the current phrase
@@ -531,12 +531,12 @@ public class Game {
         String line = names[curPlayer] + ", test your luck, guess the phrase: ";
         c.setFont(promptFont);
         c.setColor(Color.WHITE);
-        c.drawString(line, 250, 700);
-        c.drawString("Uncovered: " + uncovered, 120, 790);
+        c.drawString(line, 200, 560);
+        c.drawString("Uncovered: " + uncovered, 96, 630);
 
         // inform the user to use <ENTER> to submit the phrase
         c.setFont(smallPrompt);
-        c.drawString("Press <ENTER> to submit", 900, 790);
+        c.drawString("Press <ENTER> to submit", 720, 630);
 
         // continually the text console for what the user entered
         c.setFont(promptFont);
@@ -570,9 +570,9 @@ public class Game {
 
             // redraw the current line
             c.setColor(Color.BLACK);
-            c.fillRect(250, 650, 900, 60);
+            c.fillRect(200, 520, 720, 48);
             c.setColor(Color.WHITE);
-            c.drawString(line, 250, 700);
+            c.drawString(line, 200, 560);
         } // while loop for continually getting user input
 
         // split the words the user entered
@@ -611,17 +611,17 @@ public class Game {
 
             // inform the users of how much the current user made
             c.setColor(Color.BLACK);
-            c.fillRect(200, 200, 800, 300);
-            c.setFont(new Font("SansSerif", Font.BOLD, 60));
+            c.fillRect(160, 150, 640, 240);
+            c.setFont(new Font("SansSerif", Font.BOLD, 48));
             c.setColor(Color.YELLOW);
-            c.drawString(names[curPlayer] + " uncovered ", 210, 300);
-            c.drawString(numUncovered + " letters, ", 210, 380);
-            c.drawString("Gaining them $" + result.substring(1) + " x " + numUncovered + " = $" + amtGain + "!", 210, 460);
+            c.drawString(names[curPlayer] + " uncovered ", 170, 240);
+            c.drawString(numUncovered + " letters, ", 170, 305);
+            c.drawString("Gaining them $" + result.substring(1) + " x " + numUncovered + " = $" + amtGain + "!", 170, 370);
 
             // prompt the user to continue by pressing a key
             c.setColor(Color.WHITE);
             c.setFont(smallPrompt);
-            c.drawString("Press any key to continue", 400, 790);
+            c.drawString("Press any key to continue", 320, 630);
             clearBuffer();
             c.getChar();
 
@@ -644,23 +644,23 @@ public class Game {
                 // draw the prompt, informing the users that their guess is correct
                 c.setColor(Color.WHITE);
                 c.setFont(promptFont);
-                c.drawString("Correct! " + names[curPlayer] + " gains $20000!", 400, 700);
+                c.drawString("Correct! " + names[curPlayer] + " gains $20000!", 320, 560);
 
                 // prompt the user to continue & return true
                 c.setFont(smallPrompt);
-                c.drawString("Press any key to continue", 560, 790);
+                c.drawString("Press any key to continue", 450, 630);
                 c.getChar();
             } else {
                 // redraw the bottom part of the screen
                 c.setColor(Color.BLACK);
-                c.fillRect(120, 670, 1040, 120);
+                c.fillRect(95, 535, 832, 96);
 
                 // informt he user that their guess was incorrect
                 c.setColor(Color.WHITE);
                 c.setFont(promptFont);
-                c.drawString("Unfortunately, that is incorrect", 480, 700);
+                c.drawString("Unfortunately, that is incorrect", 385, 560);
                 c.setFont(smallPrompt);
-                c.drawString("Press any key to continue", 560, 790);
+                c.drawString("Press any key to continue", 450, 630);
                 c.getChar();
             } // if/else block for whether or not the user guessed the phrase
         } // if/else for whether or not the spinner landed on "broke"
@@ -683,21 +683,21 @@ public class Game {
         if(!finalRound){
             // if it is not the final round, simply display "Round [current round]"
             roundDisplay = "Round " + (curRound + 1);
-            displayX = 250;
+            displayX = 200;
         } else {
             // if it is the final round, display "Final Round"
             roundDisplay = "Final Round";
-            displayX = 110;
+            displayX = 88;
         } // if/else block for the current round display
 
         // display the current round, one letter at a time
-        c.setFont(new Font("Serif", Font.BOLD, 200));
+        c.setFont(new Font("Serif", Font.BOLD, 160));
         c.setColor(Color.YELLOW);
 
         // for each letter in string to display
         for(int i = 0; i < roundDisplay.length(); i++){
             // draw the substring up to the current letter
-            c.drawString(roundDisplay.substring(0, i + 1), displayX, 500);
+            c.drawString(roundDisplay.substring(0, i + 1), displayX, 400);
             // pause for 0.3 seconds before displaying the next letter
             pause(300);
         } // for loop for displaying each letter in roundDisplay
@@ -742,7 +742,7 @@ public class Game {
         // if it isn't the final round
         if(!finalRound){
             // initialize the wheel to a normal wheel
-            curWheel = new Wheel(640, 450, 320, wheelParts, c);
+            curWheel = new Wheel(510, 360, 255, wheelParts, c);
 
             // calculate the starting player
             curPlayer = curRound % 2;
@@ -772,7 +772,7 @@ public class Game {
             } // if/else block for calculating the current player
 
             // initialize the wheel to the final wheel parts
-            curWheel = new Wheel(640, 450, 320, finalWheelParts, c);
+            curWheel = new Wheel(512, 360, 255, finalWheelParts, c);
 
             // get the result from spinning the wheel
             String result = spinWheel();
@@ -801,26 +801,26 @@ public class Game {
                 drawStats();
 
                 // inform the users that the current player has guessed right and won $prizeAmt
-                c.setFont(new Font("Serif", Font.BOLD, 100));
+                c.setFont(new Font("Serif", Font.BOLD, 80));
                 c.setColor(Color.YELLOW);
-                c.drawString(names[curPlayer] + " has won", 200, 450);
-                c.drawString("$" + prizeAmt, 200, 560);
+                c.drawString(names[curPlayer] + " has won", 160, 360);
+                c.drawString("$" + prizeAmt, 160, 450);
 
                 // prompt the user to press a key to continue
                 c.setColor(Color.WHITE);
                 c.setFont(smallPrompt);
-                c.drawString("Press any key to continue", 400, 790);
+                c.drawString("Press any key to continue", 320, 630);
                 clearBuffer();
                 c.getChar();
             } else {
                 // inform the user that their guess was incorrect, and prompt them to continue
                 c.setColor(Color.BLACK);
-                c.fillRect(200, 670, 950, 120);
+                c.fillRect(160, 535, 760, 95);
                 c.setColor(Color.WHITE);
                 c.setFont(promptFont);
-                c.drawString("Unfortunately, that is incorrect", 400, 700);
+                c.drawString("Unfortunately, that is incorrect", 320, 560);
                 c.setFont(smallPrompt);
-                c.drawString("Press any key to continue", 400, 790);
+                c.drawString("Press any key to continue", 320, 630);
                 clearBuffer();
                 c.getChar();
             } // if/else block for whether or not the user guessed the phrase
@@ -831,11 +831,11 @@ public class Game {
     private void drawPerson(int x, int y, int width, int height, boolean winner, String name, int money){
         // draw their name above the person
         c.setColor(Color.WHITE);
-        c.setFont(new Font("Serif", Font.BOLD, 24));
+        c.setFont(new Font("Serif", Font.BOLD, 19));
         c.drawString(name, x, y - 10);
 
         // display the amount of money the current player made
-        c.drawString("$" + money, x + width / 4, y + height + 30);
+        c.drawString("$" + money, x + width / 4, y + height + 24);
 
         // fill a semi-oval for the body
         c.setColor(new Color(66,133,244));
@@ -848,7 +848,7 @@ public class Game {
         // the the player is a winner, draw a gold medal - otherwise, draw a silver medal
         if(winner) c.setColor(Color.YELLOW);
         else c.setColor(Color.GRAY);
-        c.fillOval(x + width / 2 - 30, y + height / 2, 60, 60);
+        c.fillOval(x + width / 2 - 24, y + height / 2, 60, 60);
     } // drawPerson method
 
     // displays the winner
@@ -866,23 +866,23 @@ public class Game {
 
         // display the winner higher than the loser
         if(winner == 0){
-            drawPerson(130, 250, 250, 300, true, names[0], money[0]);
-            drawPerson(890, 380, 250, 300, false, names[1], money[1]);
+            drawPerson(105, 200, 200, 240, true, names[0], money[0]);
+            drawPerson(710, 305, 200, 240, false, names[1], money[1]);
         } else {
-            drawPerson(130, 380, 250, 300, false, names[0], money[0]);
-            drawPerson(890, 250, 250, 300, true, names[1], money[1]);
+            drawPerson(105, 305, 200, 240, false, names[0], money[0]);
+            drawPerson( 712, 200, 200, 240, true, names[1], money[1]);
         } // if/else block for displaying the two people
 
         // display congratulations to the winner & inform them of how much money they made
-        c.setFont(new Font("Serif", Font.BOLD, 60));
+        c.setFont(new Font("Serif", Font.BOLD, 48));
         c.setColor(Color.YELLOW);
-        c.drawString("Congratulations " + names[winner] + "", 150, 170);
-        c.drawString("for winning $" + money[winner] + "!", 150, 775);
+        c.drawString("Congratulations " + names[winner] + "", 120, 135);
+        c.drawString("for winning $" + money[winner] + "!", 120, 620);
 
         // get the user to press any key to continue
         c.setFont(smallPrompt);
         c.setColor(Color.WHITE);
-        c.drawString("Press any key to continue", 800, 790);
+        c.drawString("Press any key to continue", 640, 630);
 
         // initialize a string array of empty strings
         String[] emptyParts = new String[15];
@@ -891,7 +891,7 @@ public class Game {
         } // for loop for filling the emptyParts string array with blank strings
 
         // initialize a wheel with blank strings and animate the wheel in a separate thread
-        Wheel emptyWheel = new Wheel(640, 500, 150, emptyParts, c);
+        Wheel emptyWheel = new Wheel(510, 400, 120, emptyParts, c);
         Thread wheelAnimate = new Thread(emptyWheel);
         wheelAnimate.start();
 
@@ -950,13 +950,4 @@ public class Game {
         // display the winner
         displayWinner();
     } // play method
-
-    // TODO remove testing
-    // TESTING ----------------------------------------------------------------------------------------------------------------------------
-    public static void main(String[] args) {
-        // 1280 x 800
-        Console c = new Console(40, 160);
-        Game g = new Game(c, true);
-        g.play();
-    } // testing main method
 } // Game class
