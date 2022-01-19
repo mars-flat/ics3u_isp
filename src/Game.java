@@ -630,8 +630,8 @@ public class Game {
 
             // if they successfully guess the phrase
             if (guessPhrase()) {
-                // give the player $20000
-                money[curPlayer] += 20000;
+                // give the player $10000
+                money[curPlayer] += 10000;
 
                 // uncover all of the blanks by setting the current phrase equal to ansPhrase
                 curPhrase = ansPhrase;
@@ -644,7 +644,7 @@ public class Game {
                 // draw the prompt, informing the users that their guess is correct
                 c.setColor(Color.WHITE);
                 c.setFont(promptFont);
-                c.drawString("Correct! " + names[curPlayer] + " gains $20000!", 320, 560);
+                c.drawString("Correct! " + names[curPlayer] + " gains $10000!", 320, 560);
 
                 // prompt the user to continue & return true
                 c.setFont(smallPrompt);

@@ -16,7 +16,7 @@ All letters of the phrase that are the guessed letters will be uncovered. Each
 uncovered letter will give the player [AMOUNT] * [UNCOVERED] dollars.
 
 The current player can then guess the phrase. If they guess correctly,
-the round ends and the player will gain $20,000.
+the round ends and the player will gain $10,000.
 If the contestant does not guess correctly, the turn goes over to
 the other player, who will repeat the process.
 After three rounds, the player with the most money will advance to the
