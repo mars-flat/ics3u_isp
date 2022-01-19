@@ -425,7 +425,7 @@ public class Game {
         // prompt the user in a white font to choose 3 letters to uncover
         c.setFont(promptFont);
         c.setColor(Color.WHITE);
-        c.drawString("Choose 3 letters to uncover, then press <ENTER>", 280, 560);
+        c.drawString(names[curPlayer] + ", Choose 3 letters to uncover, then press <ENTER>", 280, 560);
 
         // sort the currently uncovered phrases and display it to the user
         sortUncovered();
